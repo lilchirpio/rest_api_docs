@@ -1,0 +1,1004 @@
+---
+swagger: "2.0"
+info:
+  description: Description
+  version: 1.0.11
+  title: LilChirp API's
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: sameer@lilchirp.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /api
+paths:
+  /token:
+    post:
+      tags:
+      - Token
+      summary: Token Generation and Validation
+      description: Token Generation and Validation
+      operationId: generateAuthToken
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Sample Data
+        required: true
+        schema:
+          $ref: '#/definitions/token'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: tokenController
+  /google-token:
+    post:
+      tags:
+      - Token
+      summary: Token Generation using google auth
+      description: Token Generation using google auth
+      operationId: generateGoogleAuthToken
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/googleid'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: tokenController
+  /refresh-token:
+    post:
+      tags:
+      - Token
+      summary: Token Generation using google auth
+      description: Token Generation using google auth
+      operationId: refreshToken
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/refresh_token'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: tokenController
+  /campaign-widgets:
+    get:
+      tags:
+      - Widgets
+      summary: campaign Widgets
+      description: campaign Widgets value
+      operationId: dashBoardItemController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: dashboardItemController
+  /trigger-call:
+    post:
+      tags:
+      - Call Trigger
+      summary: trigger individual calls on mobile number
+      description: trigger individual calls on mobile number
+      operationId: triggerCallsController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/trigger_call'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: triggerCallController
+  /schedule-call:
+    get:
+      tags:
+      - Schedule Calls
+      summary: get all scheduled Calls and their status
+      description: get all scheduled Calls and their status
+      operationId: getScheduledCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: scheduleController
+    post:
+      tags:
+      - Call Trigger
+      summary: Schedule the Call for a specific time in future
+      description: Schedule the Call for a specific time in future
+      operationId: scheduleCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/SampleAPi'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: scheduleController
+  /campaign-run-details-widgets/{campaignId}:
+    get:
+      tags:
+      - Widgets
+      summary: Campaign Run Details widgets
+      description: Campaign Run Details widgets
+      operationId: campaignRunDetailsDashBoardItemController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - name: campaignId
+        in: path
+        description: The Campaign ID.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: dashboardItemController
+  /run-campaign/{campaignId}:
+    get:
+      tags:
+      - Run Campaign
+      summary: Get Run Campaign
+      description: get Run Campaign details
+      operationId: getRunCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - name: campaignId
+        in: path
+        description: The Campaign ID.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: runCampaignController
+    post:
+      tags:
+      - Call Trigger
+      summary: Run Campaign
+      description: Run Campaign
+      operationId: runCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - name: campaignId
+        in: path
+        description: The Campaign ID.
+        required: true
+        type: string
+        minimum: 1
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          type: object
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: runCampaignController
+  /account-run-campaign-details:
+    post:
+      tags:
+      - Run Campaign
+      summary: get filtred Run Campaign of whole account
+      description: get filtred Run Campaign of whole account
+      operationId: getAccountRunCampaignDetails
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/accountbasedGetRunCampaignDetails'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: customController
+  /run-campaign-details/{campaignrunId}:
+    get:
+      tags:
+      - Run Campaign
+      summary: GET Run Campaign Details
+      description: get Run Campaign details
+      operationId: runCampaignDetailsController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - name: campaignrunId
+        in: path
+        description: The Campaign Run Id.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: runCampaignController
+  /excel-export/{campaignrunId}:
+    get:
+      tags:
+      - Excel
+      summary: excel export of Campaign Run Details
+      description: excel export of Campaign Run Details
+      operationId: exportExcelController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - name: campaignrunId
+        in: path
+        description: The Campaign Run Id.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: runCampaignController
+  /audience-excel:
+    post:
+      tags:
+      - Excel
+      summary: Audience upload through Excel File
+      description: Audience upload through Excel File
+      operationId: createAudienceExcelController
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_token
+        required: true
+        type: string
+      - name: file
+        in: formData
+        description: The file to upload.
+        required: true
+        type: file
+      - name: audienceListName
+        in: formData
+        description: Audience List Name.
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: audienceController
+  /audience/{id}:
+    get:
+      tags:
+      - Audience
+      summary: get Audience by Id
+      description: get Audience
+      operationId: getAudienceController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: The user ID.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: audienceController
+    put:
+      tags:
+      - Audience
+      summary: Edit Audience List
+      description: Edit Audience
+      operationId: updateAudienceController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: The user ID.
+        required: true
+        type: string
+        minimum: 1
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/AudienceList'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: audienceController
+    delete:
+      tags:
+      - Audience
+      summary: delete Audience List by Id
+      description: delete Audience
+      operationId: deleteAudienceController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: The user ID.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: audienceController
+  /audience:
+    get:
+      tags:
+      - Audience
+      summary: get all Audience
+      description: get Audience
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: audienceController
+    post:
+      tags:
+      - Audience
+      summary: create Audience
+      description: create Audience
+      operationId: createAudienceController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/AudienceList'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: audienceController
+  /save-filtered-campaign:
+    post:
+      tags:
+      - Custom API
+      summary: campaign created by filtered call
+      description: campaign created by filtered call
+      operationId: createAudienceAndCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/AudienceList'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: customController
+  /recordings:
+    get:
+      tags:
+      - Recordings
+      summary: get all Recordings
+      description: get Recordings
+      operationId: getRecordingController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: recordingController
+    post:
+      tags:
+      - Recordings
+      summary: create Audience
+      description: create Audience
+      operationId: createRecordingController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/recordings'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: recordingController
+  /user:
+    post:
+      tags:
+      - User
+      summary: Create User
+      description: Create new user
+      operationId: createUser
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/create'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: userController
+  /campaigns/{id}:
+    get:
+      tags:
+      - Campaigns
+      summary: get Campaign by Id
+      description: get Campaign
+      operationId: getCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: The user ID.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: campaignController
+    delete:
+      tags:
+      - Campaigns
+      summary: Delete Campaign by Id
+      description: Delete Campaign by Id
+      operationId: deleteCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: The user ID.
+        required: true
+        type: string
+        minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: campaignController
+  /campaigns:
+    get:
+      tags:
+      - Campaigns
+      summary: get Campaign
+      description: get all Campaign
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: campaignController
+    post:
+      tags:
+      - Campaigns
+      summary: create Campaign
+      description: create Campaign
+      operationId: createCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/campaign'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      x-swagger-router-controller: campaignController
+securityDefinitions:
+  Bearer:
+    description: |
+      for accessing the API, a valid JWT token must be passed
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  googleid:
+    type: object
+    properties:
+      id:
+        type: string
+  refresh_token:
+    type: object
+    properties:
+      token:
+        type: string
+      refresh_token:
+        type: string
+  trigger_call:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      mobileNumber:
+        type: string
+  recordings:
+    type: object
+    properties:
+      projectId:
+        type: string
+      projectName:
+        type: string
+      recordingName:
+        type: string
+      recordingUrl:
+        type: string
+      tag:
+        type: string
+      triggerKeywords:
+        type: string
+  SampleAPi:
+    type: object
+  campaign:
+    type: object
+    properties:
+      campaignName:
+        type: string
+      audienceListId:
+        type: array
+        items:
+          type: string
+      project:
+        type: string
+      botPlatform:
+        type: string
+  accountbasedGetRunCampaignDetails:
+    type: object
+    properties:
+      filterdata:
+        type: array
+        items:
+          type: string
+  create:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      confirmPassword:
+        type: string
+      countryCode:
+        type: string
+  runCampaign:
+    type: object
+    properties:
+      listname:
+        type: string
+      campaignrunid:
+        type: string
+      apikey:
+        type: string
+      ruleId:
+        type: string
+      accountId:
+        type: string
+      botPlatform:
+        type: string
+      unit:
+        type: string
+      currency:
+        type: string
+  token:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  AudienceList:
+    type: object
+    properties:
+      audienceListName:
+        type: string
+      sourceType:
+        type: string
+      audienceList:
+        type: array
+        items:
+          $ref: '#/definitions/AudienceList_audienceList'
+  ApiResponse:
+    type: object
+    properties:
+      userId:
+        type: string
+      token:
+        type: string
+    example:
+      userId: 0
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1hciAwMSAyMDIzIDE1OjA2OjQzIEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsInVzZXJJZCI6eyJ1c2VySWQiOiJONG11eFZCTjdxTnNhQzl1enBuQkd5a"
+        
+  ErrorResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+  AudienceList_audienceList:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      phone:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
