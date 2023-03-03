@@ -93,7 +93,6 @@ paths:
                 msg: "invalid creds"
 
 
-      x-swagger-router-controller: tokenController
 
 
   /refresh-token:
@@ -115,9 +114,9 @@ paths:
         schema:
           type: object
           properties:
-            email:
+            token:
               type: string
-            password:
+            refresh_token:
               type: string
       responses:
         "200":
@@ -363,7 +362,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: runCampaignController
   /audience-excel:
     post:
       tags:
@@ -400,7 +398,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: audienceController
   /audience/{id}:
     get:
       tags:
@@ -433,7 +430,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: audienceController
     put:
       tags:
       - Audience
@@ -471,7 +467,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: audienceController
     delete:
       tags:
       - Audience
@@ -503,7 +498,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: audienceController
   /audience:
     get:
       tags:
@@ -529,7 +523,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: audienceController
     post:
       tags:
       - Audience
@@ -561,7 +554,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: audienceController
   /save-filtered-campaign:
     post:
       tags:
@@ -594,7 +586,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: customController
   /recordings:
     get:
       tags:
@@ -621,7 +612,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: recordingController
     post:
       tags:
       - Recordings
@@ -653,7 +643,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: recordingController
   /user:
     post:
       tags:
@@ -681,7 +670,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: userController
   /campaigns/{id}:
     get:
       tags:
@@ -714,7 +702,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: campaignController
     delete:
       tags:
       - Campaigns
@@ -746,7 +733,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: campaignController
   /campaigns:
     get:
       tags:
@@ -772,7 +758,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: campaignController
     post:
       tags:
       - Campaigns
@@ -804,7 +789,6 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/ErrorResponse'
-      x-swagger-router-controller: campaignController
 securityDefinitions:
   Bearer:
     description: |
