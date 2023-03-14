@@ -330,74 +330,8 @@ paths:
                 status: 403
                 msg: "unauthorised"
 
-  /excel-export/{campaignrunId}:
-    get:
-      tags:
-      - Excel
-      summary: excel export of Campaign Run Details
-      description: excel export of Campaign Run Details
-      operationId: exportExcelController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_token
-        required: true
-        type: string
-      - name: campaignrunId
-        in: path
-        description: The Campaign Run Id.
-        required: true
-        type: string
-        minimum: 1
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /audience-excel:
-    post:
-      tags:
-      - Excel
-      summary: Audience upload through Excel File
-      description: Audience upload through Excel File
-      operationId: createAudienceExcelController
-      consumes:
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_token
-        required: true
-        type: string
-      - name: file
-        in: formData
-        description: The file to upload.
-        required: true
-        type: file
-      - name: audienceListName
-        in: formData
-        description: Audience List Name.
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
+
+
   /audience/{id}:
     get:
       tags:
@@ -425,11 +359,66 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
+             type: object
+             properties:
+              status:
+                type: integer
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  audienceListName:
+                    type: string
+                  userEmail:
+                    type: string
+                  source:
+                    type: string
+                  audienceList:
+                     type: array
+                     items:
+                      type: object
+                      properties:
+                        firstName:
+                           type: string
+                        lastname:
+                          type: string
+                        phone:
+                          type: string
+
+
+             example:
+              status: 200
+              data: 
+                {
+                  id: "Uc7nKPpj3mHyciajL3eB",
+                  audienceListName: "test",
+                  userEmail: "api_test@vodex.ai",
+                  source: "manual",
+                  audienceList: [
+                    {
+                      firstName: "John",
+                      lastName: "Doe",
+                      phone: "918989579220"
+                    }
+                  ]
+                }
+
+
+
+        "403":
+          description: if invalid or expired token is passed
           schema:
-            $ref: '#/definitions/ErrorResponse'
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
+
     put:
       tags:
       - Audience
@@ -462,11 +451,58 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+
+             example:
+              status: 200
+              msg: "Audience list updated successfully"
+                
+        "506":
+          description: audience list not found
           schema:
-            $ref: '#/definitions/ErrorResponse'
+             type: object
+             properties:
+              status:
+                type: integer
+              errMsg:
+                type: string
+
+             example:
+              status: 506
+              errMsg: "Audience List not found with the given Id"
+
+        "507":
+          description: Server Error
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              errMsg:
+                type: string
+
+             example:
+              status: 507
+              errMsg: "something went wrong while creating account"
+
+        "403":
+          description: if invalid or expired token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
+
     delete:
       tags:
       - Audience
@@ -489,15 +525,63 @@ paths:
         required: true
         type: string
         minimum: 1
+
       responses:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+
+             example:
+              status: 200
+              msg: "Audience list deleted successfully"
+                
+        "506":
+          description: audience list not found
           schema:
-            $ref: '#/definitions/ErrorResponse'
+             type: object
+             properties:
+              status:
+                type: integer
+              errMsg:
+                type: string
+
+             example:
+              status: 506
+              errMsg: "Audience List not found with the given Id"
+
+        "507":
+          description: Server Error
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              errMsg:
+                type: string
+
+             example:
+              status: 507
+              errMsg: "something went wrong"
+
+        "403":
+          description: if invalid or expired token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
+
   /audience:
     get:
       tags:
@@ -518,11 +602,74 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
+             type: object
+             properties:
+              status:
+                type: integer
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    audienceListName:
+                      type: string
+                    userEmail:
+                      type: string
+                    source:
+                      type: string
+                    audienceList:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          firstName:
+                            type: string
+                          lastname:
+                            type: string
+                          phone:
+                            type: string
+                    totalAudience:
+                      type: number
+                    totalContacts:
+                      type: number
+
+             example:
+              status: 200
+              data: [
+                {
+                  id: "Uc7nKPpj3mHyciajL3eB",
+                  audienceListName: "test",
+                  userEmail: "api_test@vodex.ai",
+                  source: "manual",
+                  audienceList: [
+                    {
+                      firstName: "John",
+                      lastName: "Doe",
+                      phone: "918989579220"
+                    }
+                  ]
+                }
+              ]
+              totalAudience: 1
+              totalContacts: 1
+
+
+        "403":
+          description: if invalid or expired token is passed
           schema:
-            $ref: '#/definitions/ErrorResponse'
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
+
+         
     post:
       tags:
       - Audience
@@ -549,11 +696,50 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+              listId:
+                type: string
+
+             example:
+              status: 200
+              msg: "audience List Created Successfully"
+              listId: "lxieuwiox"
+
+        "507":
+          description: Server Error
           schema:
-            $ref: '#/definitions/ErrorResponse'
+             type: object
+             properties:
+              status:
+                type: integer
+              errMsg:
+                type: string
+
+             example:
+              status: 507
+              errMsg: "something went wrong"
+
+        "403":
+          description: if invalid or expired token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
+
+
+
+            
   /save-filtered-campaign:
     post:
       tags:
@@ -896,8 +1082,6 @@ definitions:
     type: object
     properties:
       audienceListName:
-        type: string
-      sourceType:
         type: string
       audienceList:
         type: array
