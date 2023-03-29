@@ -12,7 +12,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 schemes:
   - https
-host: lilchirp-prod-api.herokuapp.com
+host: api.vodex.ai
 basePath: /api
 paths:
   /token:
