@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: Vodex.ai Telecalling Service API Documentation
-  version: 1.0.0
+  version: beta
   title: Vodex API's
   termsOfService: http://swagger.io/terms/
   contact:
@@ -229,752 +229,752 @@ paths:
 
 
  
-  /run-campaign-details/{campaignrunId}:
-    get:
-      tags:
-      - Run Campaign
-      summary: GET Run Campaign Details
-      description: In this API, you can get the status and details of all calls which has been triggered on a campaign at a perticular time, we just need to provide the campaign run Id corresponding to that time. 
-      operationId: runCampaignDetailsController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_token
-        required: true
-        type: string
-      - name: campaignrunId
-        in: path
-        description: The Campaign Run Id.
-        required: true
-        type: string
-        minimum: 1
-      responses:
-        "200":
-          description: Success
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    callCode:
-                      type: string
-                    phone:
-                      type: string
-                    unit:
-                      type: string
-                    duration:
-                      type: string
-                    newCost:
-                      type: string
-                    cost:
-                      type: string
-                    callRecordingUrl:
-                      type: string
-                    currency:
-                      type: string
-                    callStatus:
-                      type: string
-                    price:
-                      type: string
+  # /run-campaign-details/{campaignrunId}:
+  #   get:
+  #     tags:
+  #     - Run Campaign
+  #     summary: GET Run Campaign Details
+  #     description: In this API, you can get the status and details of all calls which has been triggered on a campaign at a perticular time, we just need to provide the campaign run Id corresponding to that time. 
+  #     operationId: runCampaignDetailsController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_token
+  #       required: true
+  #       type: string
+  #     - name: campaignrunId
+  #       in: path
+  #       description: The Campaign Run Id.
+  #       required: true
+  #       type: string
+  #       minimum: 1
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             data:
+  #               type: array
+  #               items:
+  #                 type: object
+  #                 properties:
+  #                   callCode:
+  #                     type: string
+  #                   phone:
+  #                     type: string
+  #                   unit:
+  #                     type: string
+  #                   duration:
+  #                     type: string
+  #                   newCost:
+  #                     type: string
+  #                   cost:
+  #                     type: string
+  #                   callRecordingUrl:
+  #                     type: string
+  #                   currency:
+  #                     type: string
+  #                   callStatus:
+  #                     type: string
+  #                   price:
+  #                     type: string
 
-             example:
-              status: 200
-              data: [
-                {
-                  callCode: "campaign run started successfully",
-                  phone: "Ajb8JoJ5WMrMAfPGW1U2",
-                  unit: "Wed, Mar 1, 2023 9:58 PM",
-                  duration: "Wed, Mar 1, 2023 9:58 PM",
-                  newCost: "Wed, Mar 1, 2023 9:58 PM",
-                  cost: "Wed, Mar 1, 2023 9:58 PM",
-                  callRecordingUrl: "Wed, Mar 1, 2023 9:58 PM",
-                  currency: "Wed, Mar 1, 2023 9:58 PM",
-                  callStatus: "Wed, Mar 1, 2023 9:58 PM",
-                  price: "Wed, Mar 1, 2023 9:58 PM"
-                }
-              ]
+  #            example:
+  #             status: 200
+  #             data: [
+  #               {
+  #                 callCode: "campaign run started successfully",
+  #                 phone: "Ajb8JoJ5WMrMAfPGW1U2",
+  #                 unit: "Wed, Mar 1, 2023 9:58 PM",
+  #                 duration: "Wed, Mar 1, 2023 9:58 PM",
+  #                 newCost: "Wed, Mar 1, 2023 9:58 PM",
+  #                 cost: "Wed, Mar 1, 2023 9:58 PM",
+  #                 callRecordingUrl: "Wed, Mar 1, 2023 9:58 PM",
+  #                 currency: "Wed, Mar 1, 2023 9:58 PM",
+  #                 callStatus: "Wed, Mar 1, 2023 9:58 PM",
+  #                 price: "Wed, Mar 1, 2023 9:58 PM"
+  #               }
+  #             ]
 
-        "507":
-          description: if campaign run Id is not provided
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              errMsg:
-                type: string
-             example:
-                status: 507
-                errMsg: "Please provide campaign run Id"
-
-
-        "403":
-          description: if invalid or expired token is passed
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "unauthorised"
+  #       "507":
+  #         description: if campaign run Id is not provided
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             errMsg:
+  #               type: string
+  #            example:
+  #               status: 507
+  #               errMsg: "Please provide campaign run Id"
 
 
-
-  /audience/{id}:
-    get:
-      tags:
-      - Audience
-      summary: get Audience by Id
-      description: get Audience
-      operationId: getAudienceController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - name: id
-        in: path
-        description: The user ID.
-        required: true
-        type: string
-        minimum: 1
-      responses:
-        "200":
-          description: Success
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              data:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  audienceListName:
-                    type: string
-                  userEmail:
-                    type: string
-                  source:
-                    type: string
-                  audienceList:
-                     type: array
-                     items:
-                      type: object
-                      properties:
-                        firstName:
-                           type: string
-                        lastname:
-                          type: string
-                        phone:
-                          type: string
-
-
-             example:
-              status: 200
-              data: 
-                {
-                  id: "Uc7nKPpj3mHyciajL3eB",
-                  audienceListName: "test",
-                  userEmail: "api_test@vodex.ai",
-                  source: "manual",
-                  audienceList: [
-                    {
-                      firstName: "John",
-                      lastName: "Doe",
-                      phone: "918989579220"
-                    }
-                  ]
-                }
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
 
 
 
-        "403":
-          description: if invalid or expired token is passed
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "unauthorised"
+  # /audience/{id}:
+  #   get:
+  #     tags:
+  #     - Audience
+  #     summary: get Audience by Id
+  #     description: get Audience
+  #     operationId: getAudienceController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - name: id
+  #       in: path
+  #       description: The user ID.
+  #       required: true
+  #       type: string
+  #       minimum: 1
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             data:
+  #               type: object
+  #               properties:
+  #                 id:
+  #                   type: string
+  #                 audienceListName:
+  #                   type: string
+  #                 userEmail:
+  #                   type: string
+  #                 source:
+  #                   type: string
+  #                 audienceList:
+  #                    type: array
+  #                    items:
+  #                     type: object
+  #                     properties:
+  #                       firstName:
+  #                          type: string
+  #                       lastname:
+  #                         type: string
+  #                       phone:
+  #                         type: string
 
-    put:
-      tags:
-      - Audience
-      summary: Edit Audience List
-      description: Edit Audience
-      operationId: updateAudienceController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - name: id
-        in: path
-        description: The user ID.
-        required: true
-        type: string
-        minimum: 1
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: '#/definitions/AudienceList'
-      responses:
-        "200":
-          description: Success
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
 
-             example:
-              status: 200
-              msg: "Audience list updated successfully"
+  #            example:
+  #             status: 200
+  #             data: 
+  #               {
+  #                 id: "Uc7nKPpj3mHyciajL3eB",
+  #                 audienceListName: "test",
+  #                 userEmail: "api_test@vodex.ai",
+  #                 source: "manual",
+  #                 audienceList: [
+  #                   {
+  #                     firstName: "John",
+  #                     lastName: "Doe",
+  #                     phone: "918989579220"
+  #                   }
+  #                 ]
+  #               }
+
+
+
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
+
+  #   put:
+  #     tags:
+  #     - Audience
+  #     summary: Edit Audience List
+  #     description: Edit Audience
+  #     operationId: updateAudienceController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - name: id
+  #       in: path
+  #       description: The user ID.
+  #       required: true
+  #       type: string
+  #       minimum: 1
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/AudienceList'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+
+  #            example:
+  #             status: 200
+  #             msg: "Audience list updated successfully"
                 
-        "506":
-          description: audience list not found
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              errMsg:
-                type: string
+  #       "506":
+  #         description: audience list not found
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             errMsg:
+  #               type: string
 
-             example:
-              status: 506
-              errMsg: "Audience List not found with the given Id"
+  #            example:
+  #             status: 506
+  #             errMsg: "Audience List not found with the given Id"
 
-        "507":
-          description: Server Error
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              errMsg:
-                type: string
+  #       "507":
+  #         description: Server Error
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             errMsg:
+  #               type: string
 
-             example:
-              status: 507
-              errMsg: "something went wrong while creating account"
+  #            example:
+  #             status: 507
+  #             errMsg: "something went wrong while creating account"
 
-        "403":
-          description: if invalid or expired token is passed
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "unauthorised"
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
 
-    delete:
-      tags:
-      - Audience
-      summary: delete Audience List by Id
-      description: delete Audience
-      operationId: deleteAudienceController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - name: id
-        in: path
-        description: The user ID.
-        required: true
-        type: string
-        minimum: 1
+  #   delete:
+  #     tags:
+  #     - Audience
+  #     summary: delete Audience List by Id
+  #     description: delete Audience
+  #     operationId: deleteAudienceController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - name: id
+  #       in: path
+  #       description: The user ID.
+  #       required: true
+  #       type: string
+  #       minimum: 1
 
-      responses:
-        "200":
-          description: Success
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
 
-             example:
-              status: 200
-              msg: "Audience list deleted successfully"
+  #            example:
+  #             status: 200
+  #             msg: "Audience list deleted successfully"
                 
-        "506":
-          description: audience list not found
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              errMsg:
-                type: string
+  #       "506":
+  #         description: audience list not found
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             errMsg:
+  #               type: string
 
-             example:
-              status: 506
-              errMsg: "Audience List not found with the given Id"
+  #            example:
+  #             status: 506
+  #             errMsg: "Audience List not found with the given Id"
 
-        "507":
-          description: Server Error
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              errMsg:
-                type: string
+  #       "507":
+  #         description: Server Error
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             errMsg:
+  #               type: string
 
-             example:
-              status: 507
-              errMsg: "something went wrong"
+  #            example:
+  #             status: 507
+  #             errMsg: "something went wrong"
 
-        "403":
-          description: if invalid or expired token is passed
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "unauthorised"
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
 
-  /audience:
-    get:
-      tags:
-      - Audience
-      summary: get all Audience
-      description: get Audience
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              data:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    audienceListName:
-                      type: string
-                    userEmail:
-                      type: string
-                    source:
-                      type: string
-                    audienceList:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          firstName:
-                            type: string
-                          lastname:
-                            type: string
-                          phone:
-                            type: string
-                    totalAudience:
-                      type: number
-                    totalContacts:
-                      type: number
+  # /audience:
+  #   get:
+  #     tags:
+  #     - Audience
+  #     summary: get all Audience
+  #     description: get Audience
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             data:
+  #               type: array
+  #               items:
+  #                 type: object
+  #                 properties:
+  #                   id:
+  #                     type: string
+  #                   audienceListName:
+  #                     type: string
+  #                   userEmail:
+  #                     type: string
+  #                   source:
+  #                     type: string
+  #                   audienceList:
+  #                     type: array
+  #                     items:
+  #                       type: object
+  #                       properties:
+  #                         firstName:
+  #                           type: string
+  #                         lastname:
+  #                           type: string
+  #                         phone:
+  #                           type: string
+  #                   totalAudience:
+  #                     type: number
+  #                   totalContacts:
+  #                     type: number
 
-             example:
-              status: 200
-              data: [
-                {
-                  id: "Uc7nKPpj3mHyciajL3eB",
-                  audienceListName: "test",
-                  userEmail: "api_test@vodex.ai",
-                  source: "manual",
-                  audienceList: [
-                    {
-                      firstName: "John",
-                      lastName: "Doe",
-                      phone: "918989579220"
-                    }
-                  ]
-                }
-              ]
-              totalAudience: 1
-              totalContacts: 1
+  #            example:
+  #             status: 200
+  #             data: [
+  #               {
+  #                 id: "Uc7nKPpj3mHyciajL3eB",
+  #                 audienceListName: "test",
+  #                 userEmail: "api_test@vodex.ai",
+  #                 source: "manual",
+  #                 audienceList: [
+  #                   {
+  #                     firstName: "John",
+  #                     lastName: "Doe",
+  #                     phone: "918989579220"
+  #                   }
+  #                 ]
+  #               }
+  #             ]
+  #             totalAudience: 1
+  #             totalContacts: 1
 
 
-        "403":
-          description: if invalid or expired token is passed
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "unauthorised"
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
 
          
-    post:
-      tags:
-      - Audience
-      summary: create Audience
-      description: create Audience
-      operationId: createAudienceController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: '#/definitions/AudienceList'
-      responses:
-        "200":
-          description: Success
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-              listId:
-                type: string
+  #   post:
+  #     tags:
+  #     - Audience
+  #     summary: create Audience
+  #     description: create Audience
+  #     operationId: createAudienceController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/AudienceList'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #             listId:
+  #               type: string
 
-             example:
-              status: 200
-              msg: "audience List Created Successfully"
-              listId: "lxieuwiox"
+  #            example:
+  #             status: 200
+  #             msg: "audience List Created Successfully"
+  #             listId: "lxieuwiox"
 
-        "507":
-          description: Server Error
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              errMsg:
-                type: string
+  #       "507":
+  #         description: Server Error
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             errMsg:
+  #               type: string
 
-             example:
-              status: 507
-              errMsg: "something went wrong"
+  #            example:
+  #             status: 507
+  #             errMsg: "something went wrong"
 
-        "403":
-          description: if invalid or expired token is passed
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "unauthorised"
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
 
 
 
             
-  /save-filtered-campaign:
-    post:
-      tags:
-      - Custom API
-      summary: campaign created by filtered call
-      description: campaign created by filtered call
-      operationId: createAudienceAndCampaignController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: '#/definitions/AudienceList'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /recordings:
-    get:
-      tags:
-      - Recordings
-      summary: get all Recordings
-      description: get Recordings
-      operationId: getRecordingController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    post:
-      tags:
-      - Recordings
-      summary: create Audience
-      description: create Audience
-      operationId: createRecordingController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: '#/definitions/recordings'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /user:
-    post:
-      tags:
-      - User
-      summary: Create User
-      description: Create new user
-      operationId: createUser
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: '#/definitions/create'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /campaigns/{id}:
-    get:
-      tags:
-      - Campaigns
-      summary: get Campaign by Id
-      description: get Campaign
-      operationId: getCampaignController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - name: id
-        in: path
-        description: The user ID.
-        required: true
-        type: string
-        minimum: 1
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    delete:
-      tags:
-      - Campaigns
-      summary: Delete Campaign by Id
-      description: Delete Campaign by Id
-      operationId: deleteCampaignController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - name: id
-        in: path
-        description: The user ID.
-        required: true
-        type: string
-        minimum: 1
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /campaigns:
-    get:
-      tags:
-      - Campaigns
-      summary: get Campaign
-      description: get all Campaign
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    post:
-      tags:
-      - Campaigns
-      summary: create Campaign
-      description: create Campaign
-      operationId: createCampaignController
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: auth_key
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: '#/definitions/campaign'
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        default:
-          description: error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
+  # /save-filtered-campaign:
+  #   post:
+  #     tags:
+  #     - Custom API
+  #     summary: campaign created by filtered call
+  #     description: campaign created by filtered call
+  #     operationId: createAudienceAndCampaignController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/AudienceList'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
+  # /recordings:
+  #   get:
+  #     tags:
+  #     - Recordings
+  #     summary: get all Recordings
+  #     description: get Recordings
+  #     operationId: getRecordingController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
+  #   post:
+  #     tags:
+  #     - Recordings
+  #     summary: create Audience
+  #     description: create Audience
+  #     operationId: createRecordingController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/recordings'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
+  # /user:
+  #   post:
+  #     tags:
+  #     - User
+  #     summary: Create User
+  #     description: Create new user
+  #     operationId: createUser
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/create'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
+  # /campaigns/{id}:
+  #   get:
+  #     tags:
+  #     - Campaigns
+  #     summary: get Campaign by Id
+  #     description: get Campaign
+  #     operationId: getCampaignController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - name: id
+  #       in: path
+  #       description: The user ID.
+  #       required: true
+  #       type: string
+  #       minimum: 1
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
+  #   delete:
+  #     tags:
+  #     - Campaigns
+  #     summary: Delete Campaign by Id
+  #     description: Delete Campaign by Id
+  #     operationId: deleteCampaignController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - name: id
+  #       in: path
+  #       description: The user ID.
+  #       required: true
+  #       type: string
+  #       minimum: 1
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
+  # /campaigns:
+  #   get:
+  #     tags:
+  #     - Campaigns
+  #     summary: get Campaign
+  #     description: get all Campaign
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
+  #   post:
+  #     tags:
+  #     - Campaigns
+  #     summary: create Campaign
+  #     description: create Campaign
+  #     operationId: createCampaignController
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: auth_key
+  #       required: true
+  #       type: string
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/campaign'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: '#/definitions/ApiResponse'
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
 securityDefinitions:
   Bearer:
     description: |
