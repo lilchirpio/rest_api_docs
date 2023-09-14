@@ -4,6 +4,10 @@ info:
   description: Vodex.ai Telecalling Service API Documentation
   version: 1.0.0
   title: Vodex API's
+  x-logo:
+    url: 'https://firebasestorage.googleapis.com/v0/b/lilchirp-io.appspot.com/o/logo.png?alt=media&token=3178b5f8-84ff-426d-ba89-8088fa2c4d92'
+    backgroundColor: '#FFFFFF'
+    altText: 'Vodex'
   termsOfService: http://swagger.io/terms/
   contact:
     email: sameer@lilchirp.io
