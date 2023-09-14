@@ -167,7 +167,7 @@ paths:
     post:
       tags:
       - Call Trigger
-      summary: trigger individual calls on mobile number
+      summary: trigger individual calls on mobile number with Voximplant(service Provider)
       description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
       consumes:
       - application/json
@@ -235,7 +235,7 @@ paths:
     post:
       tags:
       - Call Trigger
-      summary: trigger individual calls on mobile number
+      summary: trigger individual calls on mobile number with Vodex(service Provider)
       description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
       consumes:
       - application/json
