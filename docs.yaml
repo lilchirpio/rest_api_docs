@@ -231,6 +231,61 @@ paths:
                 status: 403
                 msg: "unauthorised"
 
+  /v1/trigger-call:
+    post:
+      tags:
+      - Call Trigger
+      summary: trigger individual calls on mobile number
+      description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/trigger_call'
+      responses:
+        "200":
+          description: Success
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+              campaignRunId:
+                type: string
+              timeStamp:
+                type: string
+             example:
+              status: 200
+              msg: "campaign run started successfully"
+              campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
+              timeStamp: "Wed, Mar 1, 2023 9:58 PM"
+
+
+        "403":
+          description: if invalid or expired token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
 
  
   # /run-campaign-details/{campaignrunId}:
