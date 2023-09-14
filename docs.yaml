@@ -8,12 +8,12 @@ info:
     url: 'https://firebasestorage.googleapis.com/v0/b/lilchirp-io.appspot.com/o/logo.png?alt=media&token=3178b5f8-84ff-426d-ba89-8088fa2c4d92'
     backgroundColor: '#FFFFFF'
     altText: 'Vodex'
-  termsOfService: http://swagger.io/terms/
+  termsOfService: https://vodex.ai/terms-of-use
   contact:
-    email: sameer@lilchirp.io
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    email: contact@vodex.ai
+  # license:
+  #   name: Apache 2.0
+  #   url: http://www.apache.org/licenses/LICENSE-2.0.html
 schemes:
   - https
 host: beta.api.vodex.ai
