@@ -26,6 +26,8 @@ tags:
     description: Vodex manages different projects in a single account so that you can create different bots entirely isolated from eachother for your different use cases.
   - name: Audience
     description: Once your project is setup, we will use audience module to add the information of the target audience like their name, mobile no. to call.
+  - name: Call Trigger
+    description: Once your project is setup, we will use audience module to add the information of the target audience like their name, mobile no. to call.
 
 paths:
 
@@ -418,6 +420,43 @@ paths:
 
       x-swagger-router-controller: "audienceController"
 
+  /v1/trigger-call:
+    post:
+      tags:
+        - "Call Trigger"
+      summary: "Run Campaign"
+      description: "Run Campaign"
+
+      x-swagger-router-controller: "triggerCallController"
+      operationId: triggerAutomaticCallController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: API Key for your account
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/triggerCall"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 
 
@@ -1413,6 +1452,18 @@ definitions:
       - languageCode
       - projectAccess
       - description
+
+  triggerCall:
+    type: object
+    properties:
+      callList:
+        type: array
+        items:
+          $ref: '#/definitions/AudienceList_audienceList'
+        description: you can add the extra parameters required for the call inside the array objects
+      projectId:
+        type: string
+
 
 
   refresh_token:
