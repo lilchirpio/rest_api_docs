@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: Vodex.ai Telecalling Service API Documentation
-  version: beta
+  version: "2.0"
   title: Vodex API's
   x-logo:
     url: 'https://firebasestorage.googleapis.com/v0/b/lilchirp-io.appspot.com/o/logo.png?alt=media&token=3178b5f8-84ff-426d-ba89-8088fa2c4d92'
@@ -25,11 +25,7 @@ tags:
   - name: Projects
     description: Vodex manages different projects in a single account so that you can create different bots entirely isolated from eachother for your different use cases.
   - name: Audience
-    description: asss
-
-
-
-
+    description: Once your project is setup, we will use audience module to add the information of the target audience like their name, mobile no. to call.
 
 paths:
 
@@ -59,56 +55,106 @@ paths:
         "200":
           description: Success
           schema:
-             type: object
-             properties:
-              userId:
-                type: string
-              token:
-                type: string
-             example:
-                userId: "alyz"
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1hciAwMSAyMDIzIDE1OjA2OjQzIEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsInVzZXJJZCI6eyJ1c2VySWQiOiJONG11eFZCTjdxTnNhQzl1enBuQkd5a"
-
-        "520":
+             "type": "object"
+             "properties": {
+               "status": {
+                 "type": "integer"
+               },
+               "data": {
+                 "type": "object",
+                 "properties": {
+                   "_id": {
+                     "type": "string"
+                   },
+                   "email": {
+                     "type": "string"
+                   },
+                   "accounts": {
+                     "type": "array",
+                     "items": [
+                       {
+                         "type": "object",
+                         "properties": {
+                           "_id": {
+                             "type": "string"
+                           },
+                           "accountUrl": {
+                             "type": "string"
+                           },
+                           "accountName": {
+                             "type": "string"
+                           },
+                           "currency": {
+                             "type": "string"
+                           }
+                         },
+                         "required": [
+                           "_id",
+                           "accountUrl",
+                           "accountName",
+                           "currency"
+                         ]
+                       }
+                     ]
+                   },
+                   "adminAccess": {
+                     "type": "array",
+                     "items": [
+                       {
+                         "type": "object",
+                         "properties": {
+                           "isAdmin": {
+                             "type": "boolean"
+                           },
+                           "accountId": {
+                             "type": "string"
+                           }
+                         },
+                         "required": [
+                           "isAdmin",
+                           "accountId"
+                         ]
+                       }
+                     ]
+                   },
+                   "lastLogin": {
+                     "type": "object",
+                     "properties": {
+                       "accountId": {
+                         "type": "string"
+                       },
+                       "time": {
+                         "type": "string"
+                       }
+                     },
+                     "required": [
+                       "accountId",
+                       "time"
+                     ]
+                   },
+                   "token": {
+                     "type": "string"
+                   }
+                 }
+                      }
+                    }
+        "404":
           description: error
           schema:
              type: object
-             properties:
-              code:
-                type: integer
-              msg:
-                type: string
+             "properties": {
+               "status": {
+                 "type": "integer"
+               },
+               "errMsg": {
+                 "type": "string"
+               }
+             }
              example:
-                code: 520
-                msg: "\"email\" must be a valid email"
+                status: 404
+                errMsg: "Invalid Username/Password"
 
 
-        "502":
-          description: error
-          schema:
-             type: object
-             properties:
-              code:
-                type: integer
-              msg:
-                type: string
-             example:
-                code: 502
-                msg: "something went wrong while creating auth token"
-
-
-        "403":
-          description: error
-          schema:
-             type: object
-             properties:
-              code:
-                type: integer
-              msg:
-                type: string
-             example:
-                code: 403
-                msg: "invalid creds"
 
   /v1/project:
     post:
@@ -130,12 +176,12 @@ paths:
           name: Authorization
           type: string
           required: true
-          description: auth_token
+          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
         - in: header
           name: dburl
           type: string
           required: true
-          description: db_url
+          description: unique key which you will be receiving in the login API, under account section with the name of accountUrl 
         - in: body
           name: body
           description: payload
@@ -171,12 +217,12 @@ paths:
           name: Authorization
           type: string
           required: true
-          description: auth_token
+          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
         - in: header
           name: dburl
           type: string
           required: true
-          description: db_url
+          description: unique key which you will be receiving in the login API, under account section with the name of accountUrl 
 
       responses:
         "200":
@@ -189,11 +235,55 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 
+  /v1/audience:
+    post:
+      tags:
+        - "Audience"
+      summary: "create Audience List"
+      description: "create Audience"
+      operationId: createAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: unique key which you will be receiving in the login API, under account section with the name of accountUrl 
+
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/AudienceList"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+      x-swagger-router-controller: "audienceController"
+
+
   /v1/audience/{id}:
     get:
       tags:
         - "Audience"
-      summary: "get Audience by projectId"
+      summary: "get Audience List"
       description: "get Audience"
       operationId: getAudienceController
       consumes:
@@ -203,15 +293,16 @@ paths:
 
       parameters:
         - in: header
-          name: dburl
-          type: string
-          required: true
-          description: db_url
-        - in: header
           name: Authorization
           type: string
           required: true
-          description: auth_key
+          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: unique key which you will be receiving in the login API, under account section with the name of accountUrl 
+
         - in: path
           name: id # Note the name is the same as in the path
           required: true
@@ -299,15 +390,15 @@ paths:
 
       parameters:
         - in: header
-          name: dburl
-          type: string
-          required: true
-          description: db_url
-        - in: header
           name: Authorization
           type: string
           required: true
-          description: auth_key
+          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: unique key which you will be receiving in the login API, under account section with the name of accountUrl 
         - in: path
           name: id # Note the name is the same as in the path
           required: true
@@ -1414,15 +1505,33 @@ definitions:
         type: string
       password:
         type: string
+
   AudienceList:
     type: object
     properties:
-      audienceListName:
+      audienceName:
         type: string
+        description: give your audience list a name
+      # audienceList:
+      #   type: array
+      #   items:
+      #     type: object
+      source:
+        type: string
+        description: put hard code value as "manual"
+      projectId:
+        type: string
+        description: your project Id
       audienceList:
         type: array
         items:
           $ref: '#/definitions/AudienceList_audienceList'
+    required:
+      - audienceName
+      - projectId
+      - audienceList
+
+
   ApiResponse:
     type: object
     properties:
