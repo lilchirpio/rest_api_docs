@@ -4,23 +4,41 @@ info:
   description: Vodex.ai Telecalling Service API Documentation
   version: beta
   title: Vodex API's
-  termsOfService: http://swagger.io/terms/
+  x-logo:
+    url: 'https://firebasestorage.googleapis.com/v0/b/lilchirp-io.appspot.com/o/logo.png?alt=media&token=3178b5f8-84ff-426d-ba89-8088fa2c4d92'
+    backgroundColor: '#FFFFFF'
+    altText: 'Vodex'
+  termsOfService: https://vodex.ai/terms-of-use
   contact:
-    email: sameer@lilchirp.io
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    email: developers@vodex.ai
+  # license:
+  #   name: Apache 2.0
+  #   url: http://www.apache.org/licenses/LICENSE-2.0.html
 schemes:
   - https
-host: beta.api.vodex.ai
+host: prod.api.vodex.ai
 basePath: /api
+
+tags:
+  - name: Authentication
+    description: Vodex uses Bearer as well as API Key for authentication. Include your token in the HTTP Authorization header. you can get the access token by using below API's. The Auth token will be valid till 24 hours. If you are looking for the API Key's for your account, please contact the Vodex dev support or drop a mail at developers@vodex.ai.
+  - name: Projects
+    description: Vodex manages different projects in a single account so that you can create different bots entirely isolated from eachother for your different use cases.
+  - name: Audience
+    description: asss
+
+
+
+
+
 paths:
-  /token:
+
+  /v1/login:
     post:
       tags:
-      - Token
+      - Authentication
       summary: Token Generation and user Validation
-      description: here we need to pass the "email" and "password" in the payload and it will provide you with the token and unique user Id.
+      description: provide your account email and password to get corresponding token.
       consumes:
       - application/json
       produces:
@@ -92,141 +110,413 @@ paths:
                 code: 403
                 msg: "invalid creds"
 
-
-
-
-  /refresh-token:
+  /v1/project:
     post:
       tags:
-      - Token
-      summary: Refresh Token 
-      description: In case our token got invalid, we can call this API for new refresh token, here we need two fields "token" i.e. your expired token and "refresh_token" - this will be provided by the API admin.
-      operationId: refreshToken
+        - "Projects"
+      summary: "Create Projects"
+      description: "This API will create a new project and add it to your account."
+
+      x-swagger-router-controller: "projectController"
+      operationId: createProjectController
+
       consumes:
-      - application/json
+        - "application/json"
       produces:
-      - application/json
+        - "application/json"
+
       parameters:
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          type: object
-          properties:
-            token:
-              type: string
-            refresh_token:
-              type: string
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/createProject"
+
       responses:
         "200":
           description: Success
           schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              token:
-                type: string
-             example:
-                status: 200
-                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1hciAwMSAyMDIzIDE1OjA2OjQzIEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsInVzZXJJZCI6eyJ1c2VySWQiOiJONG11eFZCTjdxTnNhQzl1enBuQkd5a"
-
-        "502":
-          description: if invalid token is passed
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
           schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 502
-                msg: "invalid token"
-
-        "403":
-          description: if invalid refresh_token is passed
-          schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "invalid refresh token"
- 
- 
-  /trigger-call:
-    post:
+            $ref: "#/definitions/ErrorResponse"
+    get:
       tags:
-      - Call Trigger
-      summary: trigger individual calls on mobile number
-      description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
+        - "Projects"
+      summary: "Get All projects"
+      description: "Get All projects"
+
+      x-swagger-router-controller: "projectController"
+      operationId: getAllProjectsController
+
       consumes:
-      - application/json
+        - "application/json"
       produces:
-      - application/json
+        - "application/json"
+
       parameters:
-      - name: Authorization
-        in: header
-        description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
-        required: true
-        type: string
-      - in: body
-        name: body
-        description: payload
-        required: true
-        schema:
-          $ref: '#/definitions/trigger_call'
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+
       responses:
         "200":
           description: Success
           schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-              campaignRunId:
-                type: string
-              timeStamp:
-                type: string
-             example:
-              status: 200
-              msg: "campaign run started successfully"
-              campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
-              timeStamp: "Wed, Mar 1, 2023 9:58 PM"
-        "507":
-          description: if greeting recording is not present in the account
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
           schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              errMsg:
-                type: string
-             example:
-                status: 507
-                errMsg: "Please add Greeting or Invitation recordings"
+            $ref: "#/definitions/ErrorResponse"
 
 
-        "403":
-          description: if invalid or expired token is passed
+  /v1/audience/{id}:
+    get:
+      tags:
+        - "Audience"
+      summary: "get Audience by projectId"
+      description: "get Audience"
+      operationId: getAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Project Id.
+        - in: query
+          name: pageIndex
+          type: integer
+          required: true
+          description: offset value
+        - in: query
+          name: pageSize
+          type: integer
+          required: true
+          description: limit value
+
+      responses:
+        "200":
+          description: Success
           schema:
-             type: object
-             properties:
-              status:
-                type: integer
-              msg:
-                type: string
-             example:
-                status: 403
-                msg: "unauthorised"
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
+      x-swagger-router-controller: "audienceController"
+    put:
+      tags:
+        - "Audience"
+      summary: "Edit Audience List"
+      description: "Edit Audience"
+      operationId: updateAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/AudienceList"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+      x-swagger-router-controller: "audienceController"
+    delete:
+      tags:
+        - "Audience"
+      summary: "delete Audience List by Id"
+      description: "delete Audience"
+      operationId: deleteAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+      x-swagger-router-controller: "audienceController"
+
+
+
+
+  # /refresh-token:
+  #   post:
+  #     tags:
+  #     - Token
+  #     summary: Refresh Token 
+  #     description: In case our token got invalid, we can call this API for new refresh token, here we need two fields "token" i.e. your expired token and "refresh_token" - this will be provided by the API admin.
+  #     operationId: refreshToken
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         type: object
+  #         properties:
+  #           token:
+  #             type: string
+  #           refresh_token:
+  #             type: string
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             token:
+  #               type: string
+  #            example:
+  #               status: 200
+  #               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1hciAwMSAyMDIzIDE1OjA2OjQzIEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsInVzZXJJZCI6eyJ1c2VySWQiOiJONG11eFZCTjdxTnNhQzl1enBuQkd5a"
+
+  #       "502":
+  #         description: if invalid token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 502
+  #               msg: "invalid token"
+
+  #       "403":
+  #         description: if invalid refresh_token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "invalid refresh token"
+ 
+ 
+  # /trigger-call:
+  #   post:
+  #     tags:
+  #     - Call Trigger
+  #     summary: trigger individual calls on mobile number with Voximplant(service Provider)
+  #     description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
+  #       required: true
+  #       type: string
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/trigger_call'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #             campaignRunId:
+  #               type: string
+  #             timeStamp:
+  #               type: string
+  #            example:
+  #             status: 200
+  #             msg: "campaign run started successfully"
+  #             campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
+  #             timeStamp: "Wed, Mar 1, 2023 9:58 PM"
+  #       "507":
+  #         description: if greeting recording is not present in the account
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             errMsg:
+  #               type: string
+  #            example:
+  #               status: 507
+  #               errMsg: "Please add Greeting or Invitation recordings"
+
+
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
+
+  # /v1/trigger-call:
+  #   post:
+  #     tags:
+  #     - Call Trigger
+  #     summary: trigger individual calls on mobile number with Vodex(service Provider)
+  #     description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
+  #     consumes:
+  #     - application/json
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #     - name: Authorization
+  #       in: header
+  #       description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
+  #       required: true
+  #       type: string
+  #     - in: body
+  #       name: body
+  #       description: payload
+  #       required: true
+  #       schema:
+  #         $ref: '#/definitions/trigger_call'
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #             campaignRunId:
+  #               type: string
+  #             timeStamp:
+  #               type: string
+  #            example:
+  #             status: 200
+  #             msg: "campaign run started successfully"
+  #             campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
+  #             timeStamp: "Wed, Mar 1, 2023 9:58 PM"
+
+
+  #       "403":
+  #         description: if invalid or expired token is passed
+  #         schema:
+  #            type: object
+  #            properties:
+  #             status:
+  #               type: integer
+  #             msg:
+  #               type: string
+  #            example:
+  #               status: 403
+  #               msg: "unauthorised"
 
  
   # /run-campaign-details/{campaignrunId}:
@@ -988,6 +1278,52 @@ definitions:
     properties:
       id:
         type: string
+
+  createProject:
+    type: object
+    properties:
+      projectName:
+        type: string
+        description: "your project name"
+      projectKey:
+        type: string
+        description: "your project key"
+      botPlatform:
+        type: string
+      accountId:
+        type: string
+        description: "your account Id"
+      callerIdNumber:
+        type: string
+      callTransferNumber:
+        type: string
+      whatsappId:
+        type: string
+      languageCode:
+        type: string
+      projectAccess:
+        type: array
+        items:
+          type: string
+        description: "your user Id which will be used to access the account."
+      voximPlantApikey:
+        type: string
+      voximPlantRuleId:
+        type: string
+      voximPlantAccountId:
+        type: string
+      description:
+        type: string
+        description: "your project description"
+    required:
+      - projectName
+      - botPlatform
+      - accountId
+      - languageCode
+      - projectAccess
+      - description
+
+
   refresh_token:
     type: object
     properties:
@@ -1114,5 +1450,5 @@ definitions:
       phone:
         type: string
 externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
+  description: Find out more about Vodex
+  url: https://vodex.ai
