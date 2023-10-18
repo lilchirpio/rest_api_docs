@@ -458,6 +458,190 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /v1/campaign-run/details/{projectId}/{campaignrunId}:
+    get:
+      tags:
+        - "Run Campaign Details"
+      summary: "GET Run Campaign Details"
+      description: "get Run Campaign details"
+
+      operationId: getCampaignRunDetailsController
+      x-swagger-router-controller: "campaignRunDetailsController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: path
+          name: projectId
+          required: true
+          type: string
+          minimum: 1
+          description: The Project ID.
+        - in: path
+          name: campaignrunId # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Campaign Run Id.
+        - in: query
+          name: pageIndex
+          type: integer
+          required: true
+          description: offset value
+        - in: query
+          name: pageSize
+          type: integer
+          required: true
+          description: limit value
+        - in: query
+          name: live
+          type: boolean
+          required: true
+          description: limit value
+        - in: query
+          name: duration
+          type: string
+          required: false
+          description: duration
+        - in: query
+          name: callStatus
+          type: string
+          required: false
+          description: callStatus
+        - in: query
+          name: outcome
+          type: array
+          items:
+            type: string
+          required: false
+          description: outcome
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "countsData": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "count": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "_id",
+                              "count"
+                            ]
+                          }
+                        ]
+                      },
+                      "doc": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string"
+                              },
+                              "projectId": {
+                                "type": "string"
+                              },
+                              "campaignRunId": {
+                                "type": "string"
+                              },
+                              "callCode": {
+                                "type": "integer"
+                              },
+                              "callStatus": {
+                                "type": "string"
+                              },
+                              "cost": {
+                                "type": "string"
+                              },
+                              "newCost": {
+                                "type": "string"
+                              },
+                              "callRecordingUrl": {
+                                "type": "string"
+                              },
+                              "outComes": {
+                                "type": "array",
+                                "items": {}
+                              },
+                              "phone": {
+                                "type": "string"
+                             },
+                            "call_uuid": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "currency": {
+                              "type": "string"
+                            },
+                            "duration": {
+                              "type": "integer"
+                            },
+                            "price": {
+                              "type": "string"
+                            },
+                            "unit": {
+                              "type": "string"
+                            },
+                            "fixedCost": {
+                              "type": "integer"
+                            }
+                          },
+                          }
+                        ]
+                      },
+                      "totalCount": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "countsData",
+                      "doc",
+                      "totalCount"
+                    ]
+                  }
+                }
+
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 
   # /refresh-token:
