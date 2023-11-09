@@ -16,8 +16,8 @@ info:
   #   url: http://www.apache.org/licenses/LICENSE-2.0.html
 schemes:
   - https
-host: prod.api.vodex.ai
-basePath: /api
+host: api.vodex.ai
+basePath: /
 
 tags:
   - name: Authentication
@@ -31,7 +31,7 @@ tags:
 
 paths:
 
-  /v1/login:
+  api/v1/login:
     post:
       tags:
       - Authentication
@@ -158,7 +158,7 @@ paths:
 
 
 
-  /v1/project:
+  api/v1/project:
     post:
       tags:
         - "Projects"
@@ -237,7 +237,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 
-  /v1/audience:
+  api/v1/audience:
     post:
       tags:
         - "Audience"
@@ -281,7 +281,7 @@ paths:
       x-swagger-router-controller: "audienceController"
 
 
-  /v1/audience/{id}:
+  api/v1/audience/{id}:
     get:
       tags:
         - "Audience"
@@ -420,7 +420,7 @@ paths:
 
       x-swagger-router-controller: "audienceController"
 
-  /v1/trigger-call:
+  api/v1/trigger-call:
     post:
       tags:
         - "Call Trigger"
@@ -458,7 +458,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/campaign-run/details/{projectId}/{campaignrunId}:
+  api/v1/campaign-run/details/{projectId}/{campaignrunId}:
     get:
       tags:
         - "Run Campaign Details"
@@ -643,6 +643,58 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  analyze/summary:
+    post:
+      tags:
+        - analyze
+      summary: Summarize
+      operationId: summarize_analyze_summary_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/Summary"
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SummaryOutput'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/HTTPValidationError'
+
+  /analyze/transcript/{call_uuid}:
+    get:
+      tags:
+        - analyze
+      summary: Gets ths transcript of a call UUID
+      description: Gets the transcript of a call
+      operationId: get_transcript_analyze_transcript__call_uuid__get
+      parameters:
+        - required: true
+          schema:
+            type: string
+            title: Call Uuid
+          name: call_uuid
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/HTTPValidationError'
 
   # /refresh-token:
   #   post:
@@ -1793,6 +1845,56 @@ definitions:
         type: string
       phone:
         type: string
+
+  Summary:
+    properties:
+      recording_url:
+        type: string
+        title: Recording Url
+      call_uuid:
+        type: string
+        title: Call Uuid
+    type: object
+    title: Summary
+  SummaryOutput:
+    properties:
+      summary:
+        type: string
+        title: Summary
+    type: object
+    required:
+      - summary
+    title: SummaryOutput
+  ValidationError:
+    properties:
+      loc:
+        items:
+          anyOf:
+            - type: string
+            - type: integer
+        type: array
+        title: Location
+      msg:
+        type: string
+        title: Message
+      type:
+        type: string
+        title: Error Type
+    type: object
+    required:
+      - loc
+      - msg
+      - type
+    title: ValidationError
+  HTTPValidationError:
+    properties:
+      detail:
+        items:
+          $ref: '#/definitions/ValidationError'
+        type: array
+        title: Detail
+    type: object
+    title: HTTPValidationError
 externalDocs:
   description: Find out more about Vodex
   url: https://vodex.ai
