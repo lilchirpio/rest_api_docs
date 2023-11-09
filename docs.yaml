@@ -31,7 +31,7 @@ tags:
 
 paths:
 
-  api/v1/login:
+  /api/v1/login:
     post:
       tags:
       - Authentication
@@ -158,7 +158,7 @@ paths:
 
 
 
-  api/v1/project:
+  /api/v1/project:
     post:
       tags:
         - "Projects"
@@ -237,7 +237,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 
-  api/v1/audience:
+  /api/v1/audience:
     post:
       tags:
         - "Audience"
@@ -281,7 +281,7 @@ paths:
       x-swagger-router-controller: "audienceController"
 
 
-  api/v1/audience/{id}:
+  /api/v1/audience/{id}:
     get:
       tags:
         - "Audience"
@@ -420,7 +420,7 @@ paths:
 
       x-swagger-router-controller: "audienceController"
 
-  api/v1/trigger-call:
+  /api/v1/trigger-call:
     post:
       tags:
         - "Call Trigger"
@@ -458,7 +458,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  api/v1/campaign-run/details/{projectId}/{campaignrunId}:
+  /api/v1/campaign-run/details/{projectId}/{campaignrunId}:
     get:
       tags:
         - "Run Campaign Details"
@@ -643,7 +643,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  analyze/summary:
+  /analyze/summary:
     post:
       tags:
         - analyze
