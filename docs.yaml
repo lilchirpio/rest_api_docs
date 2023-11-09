@@ -1848,9 +1848,6 @@ definitions:
 
   Summary:
     properties:
-      recording_url:
-        type: string
-        title: Recording Url
       call_uuid:
         type: string
         title: Call Uuid
