@@ -649,6 +649,12 @@ paths:
         - analyze
       summary: Summarize
       operationId: summarize_analyze_summary_post
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
       requestBody:
         content:
           application/json:
@@ -683,6 +689,11 @@ paths:
             title: Call Uuid
           name: call_uuid
           in: path
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
       responses:
         '200':
           description: Successful Response
