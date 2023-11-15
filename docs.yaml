@@ -157,13 +157,49 @@ paths:
                 errMsg: "Invalid Username/Password"
 
 
+  /dashboard:
+     get:
+      tags:
+        - "Dashboard"
+      summary: "Dashboard API"
+      description: "Dashboard API"
+
+      x-swagger-router-controller: "dashboardController"
+      operationId: getDashboardController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /api/v1/project:
     post:
       tags:
-        - "Projects"
+        - "Project"
       summary: "Create Projects"
-      description: "This API will create a new project and add it to your account."
+      description: "Create new project"
 
       x-swagger-router-controller: "projectController"
       operationId: createProjectController
@@ -178,12 +214,12 @@ paths:
           name: Authorization
           type: string
           required: true
-          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
+          description: auth_token
         - in: header
           name: dburl
           type: string
           required: true
-          description: unique key which you will be receiving in the login API, under account section with the name of accountUrl 
+          description: db_url
         - in: body
           name: body
           description: payload
@@ -202,7 +238,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     get:
       tags:
-        - "Projects"
+        - "Project"
       summary: "Get All projects"
       description: "Get All projects"
 
@@ -219,12 +255,12 @@ paths:
           name: Authorization
           type: string
           required: true
-          description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
+          description: auth_token
         - in: header
           name: dburl
           type: string
           required: true
-          description: unique key which you will be receiving in the login API, under account section with the name of accountUrl 
+          description: db_url
 
       responses:
         "200":
@@ -235,6 +271,216 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
+  # /agent-setting:
+  #    post:
+  #     tags:
+  #       - "Agent Setting"
+  #     summary: "create Agent Setting"
+  #     description: "create Agent Setting"
+
+  #     operationId: createPromptsController
+  #     x-swagger-router-controller: "promptsController"
+
+  #     consumes:
+  #       - "application/json"
+  #     produces:
+  #       - "application/json"
+
+  #     parameters:
+  #       - in: header
+  #         name: dburl
+  #         type: string
+  #         required: true
+  #         description: db_url
+  #       - in: header
+  #         name: Authorization
+  #         type: string
+  #         required: true
+  #         description: auth_key
+  #       - in: body
+  #         name: body
+  #         description: payload
+  #         required: true
+  #         schema:
+  #           $ref: "#/definitions/agentSetting"
+
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: "#/definitions/ApiResponse"
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: "#/definitions/ErrorResponse"
+  #   get:
+  #     tags:
+  #       - "Agent Setting"
+  #     summary: "get Agent Setting"
+  #     description: "get Agent Setting"
+
+  #     operationId: getAgentSettingController
+  #     x-swagger-router-controller: "promptsController"
+
+  #     consumes:
+  #       - "application/json"
+  #     produces:
+  #       - "application/json"
+
+  #     parameters:
+  #       - in: header
+  #         name: dburl
+  #         type: string
+  #         required: true
+  #         description: db_url
+  #       - in: header
+  #         name: Authorization
+  #         type: string
+  #         required: true
+  #         description: auth_key
+
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: "#/definitions/ApiResponse"
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: "#/definitions/ErrorResponse"
+
+
+  # /agent-setting/{id}:
+  #   get:
+  #     tags:
+  #       - "Agent Setting"
+  #     summary: "get Agent Setting"
+  #     description: "get Agent Setting"
+
+  #     operationId: getAgentSettingController
+  #     x-swagger-router-controller: "promptsController"
+
+  #     consumes:
+  #       - "application/json"
+  #     produces:
+  #       - "application/json"
+
+  #     parameters:
+  #       - in: header
+  #         name: dburl
+  #         type: string
+  #         required: true
+  #         description: db_url
+  #       - in: header
+  #         name: Authorization
+  #         type: string
+  #         required: true
+  #         description: auth_key
+  #       - in: path
+  #         name: id 
+  #         required: true
+  #         type: string
+  #         minimum: 1
+  #         description: The project ID.
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: "#/definitions/ApiResponse"
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: "#/definitions/ErrorResponse"
+  #   put:
+  #     tags:
+  #       - "Agent Setting"
+  #     summary: "edit Agent Setting"
+  #     description: "edit Agent Setting"
+
+  #     operationId: updatePromptsController
+  #     x-swagger-router-controller: "promptsController"
+
+  #     consumes:
+  #       - "application/json"
+  #     produces:
+  #       - "application/json"
+
+  #     parameters:
+  #       - in: header
+  #         name: dburl
+  #         type: string
+  #         required: true
+  #         description: db_url
+  #       - in: header
+  #         name: Authorization
+  #         type: string
+  #         required: true
+  #         description: auth_key
+  #       - in: path
+  #         name: id 
+  #         required: true
+  #         type: string
+  #         minimum: 1
+  #         description: The project ID.
+  #       - in: body
+  #         name: body
+  #         description: payload
+  #         required: true
+  #         schema:
+  #           $ref: "#/definitions/agentSetting"
+
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: "#/definitions/ApiResponse"
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: "#/definitions/ErrorResponse"
+  #   delete:
+  #     tags:
+  #       - "Agent Setting"
+  #     summary: "get Agent Setting"
+  #     description: "get Agent Setting"
+
+  #     operationId: deleteAgentSettingController
+  #     x-swagger-router-controller: "promptsController"
+
+  #     consumes:
+  #       - "application/json"
+  #     produces:
+  #       - "application/json"
+
+  #     parameters:
+  #       - in: header
+  #         name: dburl
+  #         type: string
+  #         required: true
+  #         description: db_url
+  #       - in: header
+  #         name: Authorization
+  #         type: string
+  #         required: true
+  #         description: auth_key
+  #       - in: path
+  #         name: id 
+  #         required: true
+  #         type: string
+  #         minimum: 1
+  #         description: The document ID.
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         schema:
+  #           $ref: "#/definitions/ApiResponse"
+  #       default:
+  #         description: error
+  #         schema:
+  #           $ref: "#/definitions/ErrorResponse"
+
+
 
 
   /api/v1/audience:
@@ -420,33 +666,98 @@ paths:
 
       x-swagger-router-controller: "audienceController"
 
-  /api/v1/trigger-call:
-    post:
+  /audience-excel:
+     post:
       tags:
-        - "Call Trigger"
-      summary: "Run Campaign"
-      description: "Run Campaign"
+        - "Audience"
+      summary: "Audience upload through Excel File"
+      description: "Audience upload through Excel File"
 
-      x-swagger-router-controller: "triggerCallController"
-      operationId: triggerAutomaticCallController
+      operationId: createAudienceExcelController
+      x-swagger-router-controller: "audienceController"
 
       consumes:
-        - "application/json"
+        - multipart/form-data
       produces:
         - "application/json"
 
       parameters:
         - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
           name: Authorization
           type: string
           required: true
-          description: API Key for your account
-        - in: body
-          name: body
-          description: payload
+          description: auth_token
+        - in: formData
+          name: file
+          type: file
           required: true
+          description: The file to upload.
+        - in: formData
+          name: audienceName
+          type: string
+          required: true
+          description: Audience List Name.
+        - in: formData
+          name: projectId
+          type: string
+          required: true
+          description: ProjectId List Name.
+
+      responses:
+        "200":
+          description: Success
           schema:
-            $ref: "#/definitions/triggerCall"
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+
+  /audience/excel/{id}:
+    put:
+      tags:
+        - "Audience"
+      summary: "Edit Audience List"
+      description: "Edit Audience"
+      operationId: updateAudienceExcelController
+      consumes:
+        - multipart/form-data
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: audienceName
+          type: string
+          required: true
+          description: Audience List Name.
+
 
       responses:
         "200":
@@ -458,8 +769,47 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+      x-swagger-router-controller: "audienceController"          
+
+  /api/v1/trigger-call:
+      post:
+      tags:
+        - "Call Trigger"
+      summary: "trigger individual calls on mobile number"
+      description: "trigger individual calls on mobile number"
+      operationId: triggerCallsController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/trigger_call"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+      x-swagger-router-controller: "triggerCallController"
+
   /api/v1/campaign-run/details/{projectId}/{campaignrunId}:
-    get:
+   get:
       tags:
         - "Run Campaign Details"
       summary: "GET Run Campaign Details"
@@ -533,115 +883,12 @@ paths:
         "200":
           description: Success
           schema:
-            "type": "object"
-            "properties": {
-              "status": {
-                "type": "integer"
-              },
-              "data": {
-                "type": "object",
-                "properties": {
-                  "countsData": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "_id": {
-                                "type": "string"
-                              },
-                              "count": {
-                                "type": "integer"
-                              }
-                            },
-                            "required": [
-                              "_id",
-                              "count"
-                            ]
-                          }
-                        ]
-                      },
-                      "doc": {
-                        "type": "array",
-                        "items": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "_id": {
-                                "type": "string"
-                              },
-                              "projectId": {
-                                "type": "string"
-                              },
-                              "campaignRunId": {
-                                "type": "string"
-                              },
-                              "callCode": {
-                                "type": "integer"
-                              },
-                              "callStatus": {
-                                "type": "string"
-                              },
-                              "cost": {
-                                "type": "string"
-                              },
-                              "newCost": {
-                                "type": "string"
-                              },
-                              "callRecordingUrl": {
-                                "type": "string"
-                              },
-                              "outComes": {
-                                "type": "array",
-                                "items": {}
-                              },
-                              "phone": {
-                                "type": "string"
-                             },
-                            "call_uuid": {
-                              "type": "string"
-                            },
-                            "createdAt": {
-                              "type": "string"
-                            },
-                            "updatedAt": {
-                              "type": "string"
-                            },
-                            "currency": {
-                              "type": "string"
-                            },
-                            "duration": {
-                              "type": "integer"
-                            },
-                            "price": {
-                              "type": "string"
-                            },
-                            "unit": {
-                              "type": "string"
-                            },
-                            "fixedCost": {
-                              "type": "integer"
-                            }
-                          },
-                          }
-                        ]
-                      },
-                      "totalCount": {
-                        "type": "integer"
-                      }
-                    },
-                    "required": [
-                      "countsData",
-                      "doc",
-                      "totalCount"
-                    ]
-                  }
-                }
-
+            $ref: "#/definitions/ApiResponse"
         default:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
 
   /analyze/summary:
     post:
@@ -707,193 +954,193 @@ paths:
               schema:
                 $ref: '#/definitions/HTTPValidationError'
 
-  # /refresh-token:
-  #   post:
-  #     tags:
-  #     - Token
-  #     summary: Refresh Token 
-  #     description: In case our token got invalid, we can call this API for new refresh token, here we need two fields "token" i.e. your expired token and "refresh_token" - this will be provided by the API admin.
-  #     operationId: refreshToken
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         type: object
-  #         properties:
-  #           token:
-  #             type: string
-  #           refresh_token:
-  #             type: string
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             token:
-  #               type: string
-  #            example:
-  #               status: 200
-  #               token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1hciAwMSAyMDIzIDE1OjA2OjQzIEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsInVzZXJJZCI6eyJ1c2VySWQiOiJONG11eFZCTjdxTnNhQzl1enBuQkd5a"
+  /refresh-token:
+    post:
+      tags:
+      - Token
+      summary: Refresh Token 
+      description: In case our token got invalid, we can call this API for new refresh token, here we need two fields "token" i.e. your expired token and "refresh_token" - this will be provided by the API admin.
+      operationId: refreshToken
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          type: object
+          properties:
+            token:
+              type: string
+            refresh_token:
+              type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              token:
+                type: string
+             example:
+                status: 200
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1hciAwMSAyMDIzIDE1OjA2OjQzIEdNVCswNTMwIChJbmRpYSBTdGFuZGFyZCBUaW1lKSIsInVzZXJJZCI6eyJ1c2VySWQiOiJONG11eFZCTjdxTnNhQzl1enBuQkd5a"
 
-  #       "502":
-  #         description: if invalid token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 502
-  #               msg: "invalid token"
+        "502":
+          description: if invalid token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 502
+                msg: "invalid token"
 
-  #       "403":
-  #         description: if invalid refresh_token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "invalid refresh token"
+        "403":
+          description: if invalid refresh_token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "invalid refresh token"
  
  
-  # /trigger-call:
-  #   post:
-  #     tags:
-  #     - Call Trigger
-  #     summary: trigger individual calls on mobile number with Voximplant(service Provider)
-  #     description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
-  #       required: true
-  #       type: string
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/trigger_call'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #             campaignRunId:
-  #               type: string
-  #             timeStamp:
-  #               type: string
-  #            example:
-  #             status: 200
-  #             msg: "campaign run started successfully"
-  #             campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
-  #             timeStamp: "Wed, Mar 1, 2023 9:58 PM"
-  #       "507":
-  #         description: if greeting recording is not present in the account
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             errMsg:
-  #               type: string
-  #            example:
-  #               status: 507
-  #               errMsg: "Please add Greeting or Invitation recordings"
+  /trigger-call:
+    post:
+      tags:
+      - Call Trigger
+      summary: trigger individual calls on mobile number with Voximplant(service Provider)
+      description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/trigger_call'
+      responses:
+        "200":
+          description: Success
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+              campaignRunId:
+                type: string
+              timeStamp:
+                type: string
+             example:
+              status: 200
+              msg: "campaign run started successfully"
+              campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
+              timeStamp: "Wed, Mar 1, 2023 9:58 PM"
+        "507":
+          description: if greeting recording is not present in the account
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              errMsg:
+                type: string
+             example:
+                status: 507
+                errMsg: "Please add Greeting or Invitation recordings"
 
 
-  #       "403":
-  #         description: if invalid or expired token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "unauthorised"
+        "403":
+          description: if invalid or expired token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
 
-  # /v1/trigger-call:
-  #   post:
-  #     tags:
-  #     - Call Trigger
-  #     summary: trigger individual calls on mobile number with Vodex(service Provider)
-  #     description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
-  #       required: true
-  #       type: string
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/trigger_call'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #             campaignRunId:
-  #               type: string
-  #             timeStamp:
-  #               type: string
-  #            example:
-  #             status: 200
-  #             msg: "campaign run started successfully"
-  #             campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
-  #             timeStamp: "Wed, Mar 1, 2023 9:58 PM"
+  /v1/trigger-call:
+    post:
+      tags:
+      - Call Trigger
+      summary: trigger individual calls on mobile number with Vodex(service Provider)
+      description: with this API we can directly call any number, given all the setups has been done manually in the vodex account to trigger the call, it will automatically create audience list, campaign and trigger campaign runs to execute call on the number.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: need to pass token we received at "/token" API and pass it in format "Bearer eyxzhy..."
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/trigger_call'
+      responses:
+        "200":
+          description: Success
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+              campaignRunId:
+                type: string
+              timeStamp:
+                type: string
+             example:
+              status: 200
+              msg: "campaign run started successfully"
+              campaignRunId: "Ajb8JoJ5WMrMAfPGW1U2"
+              timeStamp: "Wed, Mar 1, 2023 9:58 PM"
 
 
-  #       "403":
-  #         description: if invalid or expired token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "unauthorised"
+        "403":
+          description: if invalid or expired token is passed
+          schema:
+             type: object
+             properties:
+              status:
+                type: integer
+              msg:
+                type: string
+             example:
+                status: 403
+                msg: "unauthorised"
 
  
   # /run-campaign-details/{campaignrunId}:
@@ -999,649 +1246,443 @@ paths:
 
 
 
-  # /audience/{id}:
-  #   get:
-  #     tags:
-  #     - Audience
-  #     summary: get Audience by Id
-  #     description: get Audience
-  #     operationId: getAudienceController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - name: id
-  #       in: path
-  #       description: The user ID.
-  #       required: true
-  #       type: string
-  #       minimum: 1
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             data:
-  #               type: object
-  #               properties:
-  #                 id:
-  #                   type: string
-  #                 audienceListName:
-  #                   type: string
-  #                 userEmail:
-  #                   type: string
-  #                 source:
-  #                   type: string
-  #                 audienceList:
-  #                    type: array
-  #                    items:
-  #                     type: object
-  #                     properties:
-  #                       firstName:
-  #                          type: string
-  #                       lastname:
-  #                         type: string
-  #                       phone:
-  #                         type: string
+  /audience/{id}:
+    get:
+      tags:
+        - "Audience"
+      summary: "get Audience by projectId"
+      description: "get Audience"
+      operationId: getAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Project Id.
+        - in: query
+          name: pageIndex
+          type: integer
+          required: true
+          description: offset value
+        - in: query
+          name: pageSize
+          type: integer
+          required: true
+          description: limit value
 
-  #            example:
-  #             status: 200
-  #             data: 
-  #               {
-  #                 id: "Uc7nKPpj3mHyciajL3eB",
-  #                 audienceListName: "test",
-  #                 userEmail: "api_test@vodex.ai",
-  #                 source: "manual",
-  #                 audienceList: [
-  #                   {
-  #                     firstName: "John",
-  #                     lastName: "Doe",
-  #                     phone: "918989579220"
-  #                   }
-  #                 ]
-  #               }
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
+      x-swagger-router-controller: "audienceController"
+    put:
+      tags:
+        - "Audience"
+      summary: "Edit Audience List"
+      description: "Edit Audience"
+      operationId: updateAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/AudienceList"
 
-  #       "403":
-  #         description: if invalid or expired token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "unauthorised"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
-  #   put:
-  #     tags:
-  #     - Audience
-  #     summary: Edit Audience List
-  #     description: Edit Audience
-  #     operationId: updateAudienceController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - name: id
-  #       in: path
-  #       description: The user ID.
-  #       required: true
-  #       type: string
-  #       minimum: 1
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/AudienceList'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
+      x-swagger-router-controller: "audienceController"
+    delete:
+      tags:
+        - "Audience"
+      summary: "delete Audience List by Id"
+      description: "delete Audience"
+      operationId: deleteAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
-  #            example:
-  #             status: 200
-  #             msg: "Audience list updated successfully"
-                
-  #       "506":
-  #         description: audience list not found
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             errMsg:
-  #               type: string
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The user ID.
 
-  #            example:
-  #             status: 506
-  #             errMsg: "Audience List not found with the given Id"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
-  #       "507":
-  #         description: Server Error
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             errMsg:
-  #               type: string
+      x-swagger-router-controller: "audienceController"
 
-  #            example:
-  #             status: 507
-  #             errMsg: "something went wrong while creating account"
+  /audience:
+     post:
+      tags:
+        - "Audience"
+      summary: "create Audience"
+      description: "create Audience"
+      operationId: createAudienceController
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
 
-  #       "403":
-  #         description: if invalid or expired token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "unauthorised"
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/AudienceList"
 
-  #   delete:
-  #     tags:
-  #     - Audience
-  #     summary: delete Audience List by Id
-  #     description: delete Audience
-  #     operationId: deleteAudienceController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - name: id
-  #       in: path
-  #       description: The user ID.
-  #       required: true
-  #       type: string
-  #       minimum: 1
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-
-  #            example:
-  #             status: 200
-  #             msg: "Audience list deleted successfully"
-                
-  #       "506":
-  #         description: audience list not found
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             errMsg:
-  #               type: string
-
-  #            example:
-  #             status: 506
-  #             errMsg: "Audience List not found with the given Id"
-
-  #       "507":
-  #         description: Server Error
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             errMsg:
-  #               type: string
-
-  #            example:
-  #             status: 507
-  #             errMsg: "something went wrong"
-
-  #       "403":
-  #         description: if invalid or expired token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "unauthorised"
-
-  # /audience:
-  #   get:
-  #     tags:
-  #     - Audience
-  #     summary: get all Audience
-  #     description: get Audience
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             data:
-  #               type: array
-  #               items:
-  #                 type: object
-  #                 properties:
-  #                   id:
-  #                     type: string
-  #                   audienceListName:
-  #                     type: string
-  #                   userEmail:
-  #                     type: string
-  #                   source:
-  #                     type: string
-  #                   audienceList:
-  #                     type: array
-  #                     items:
-  #                       type: object
-  #                       properties:
-  #                         firstName:
-  #                           type: string
-  #                         lastname:
-  #                           type: string
-  #                         phone:
-  #                           type: string
-  #                   totalAudience:
-  #                     type: number
-  #                   totalContacts:
-  #                     type: number
-
-  #            example:
-  #             status: 200
-  #             data: [
-  #               {
-  #                 id: "Uc7nKPpj3mHyciajL3eB",
-  #                 audienceListName: "test",
-  #                 userEmail: "api_test@vodex.ai",
-  #                 source: "manual",
-  #                 audienceList: [
-  #                   {
-  #                     firstName: "John",
-  #                     lastName: "Doe",
-  #                     phone: "918989579220"
-  #                   }
-  #                 ]
-  #               }
-  #             ]
-  #             totalAudience: 1
-  #             totalContacts: 1
-
-
-  #       "403":
-  #         description: if invalid or expired token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "unauthorised"
-
-         
-  #   post:
-  #     tags:
-  #     - Audience
-  #     summary: create Audience
-  #     description: create Audience
-  #     operationId: createAudienceController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/AudienceList'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #             listId:
-  #               type: string
-
-  #            example:
-  #             status: 200
-  #             msg: "audience List Created Successfully"
-  #             listId: "lxieuwiox"
-
-  #       "507":
-  #         description: Server Error
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             errMsg:
-  #               type: string
-
-  #            example:
-  #             status: 507
-  #             errMsg: "something went wrong"
-
-  #       "403":
-  #         description: if invalid or expired token is passed
-  #         schema:
-  #            type: object
-  #            properties:
-  #             status:
-  #               type: integer
-  #             msg:
-  #               type: string
-  #            example:
-  #               status: 403
-  #               msg: "unauthorised"
+      x-swagger-router-controller: "audienceController"
 
 
 
             
-  # /save-filtered-campaign:
-  #   post:
-  #     tags:
-  #     - Custom API
-  #     summary: campaign created by filtered call
-  #     description: campaign created by filtered call
-  #     operationId: createAudienceAndCampaignController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/AudienceList'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #           $ref: '#/definitions/ApiResponse'
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
-  # /recordings:
-  #   get:
-  #     tags:
-  #     - Recordings
-  #     summary: get all Recordings
-  #     description: get Recordings
-  #     operationId: getRecordingController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #           $ref: '#/definitions/ApiResponse'
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
-  #   post:
-  #     tags:
-  #     - Recordings
-  #     summary: create Audience
-  #     description: create Audience
-  #     operationId: createRecordingController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/recordings'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #           $ref: '#/definitions/ApiResponse'
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
-  # /user:
-  #   post:
-  #     tags:
-  #     - User
-  #     summary: Create User
-  #     description: Create new user
-  #     operationId: createUser
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/create'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #           $ref: '#/definitions/ApiResponse'
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
+  /save-filtered-campaign:
+    post:
+      tags:
+      - Custom API
+      summary: campaign created by filtered call
+      description: campaign created by filtered call
+      operationId: createAudienceAndCampaignController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/AudienceList'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /recordings:
+    get:
+      tags:
+      - Recordings
+      summary: get all Recordings
+      description: get Recordings
+      operationId: getRecordingController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    post:
+      tags:
+      - Recordings
+      summary: create Audience
+      description: create Audience
+      operationId: createRecordingController
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: auth_key
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/recordings'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /user:
+    post:
+      tags:
+      - User
+      summary: Create User
+      description: Create new user
+      operationId: createUser
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: payload
+        required: true
+        schema:
+          $ref: '#/definitions/create'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
   # /campaigns/{id}:
-  #   get:
+  #    get:
   #     tags:
-  #     - Campaigns
-  #     summary: get Campaign by Id
-  #     description: get Campaign
+  #       - "Campaign"
+  #     summary: "Get All campaign"
+  #     description: "Get All campaign"
+
+  #     x-swagger-router-controller: "campaignController"
   #     operationId: getCampaignController
+
   #     consumes:
-  #     - application/json
+  #       - "application/json"
   #     produces:
-  #     - application/json
+  #       - "application/json"
+
   #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - name: id
-  #       in: path
-  #       description: The user ID.
-  #       required: true
-  #       type: string
-  #       minimum: 1
+  #       - in: header
+  #         name: Authorization
+  #         type: string
+  #         required: true
+  #         description: auth_token
+  #       - in: path
+  #         name: id # Note the name is the same as in the path
+  #         required: true
+  #         type: string
+  #         minimum: 1
+  #         description: project Id;
+  #       - in: header
+  #         name: dburl
+  #         type: string
+  #         required: true
+  #         description: db_url
+  #       - in: query
+  #         name: pageIndex
+  #         type: integer
+  #         required: true
+  #         description: offset value
+  #       - in: query
+  #         name: pageSize
+  #         type: integer
+  #         required: true
+  #         description: limit value
+
   #     responses:
   #       "200":
   #         description: Success
   #         schema:
-  #           $ref: '#/definitions/ApiResponse'
+  #           $ref: "#/definitions/ApiResponse"
   #       default:
   #         description: error
   #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
+  #           $ref: "#/definitions/ErrorResponse"
+
   #   delete:
   #     tags:
-  #     - Campaigns
-  #     summary: Delete Campaign by Id
-  #     description: Delete Campaign by Id
+  #       - "Campaign"
+  #     summary: "delete campaign"
+  #     description: "delete campaign"
+
+  #     x-swagger-router-controller: "campaignController"
   #     operationId: deleteCampaignController
+
   #     consumes:
-  #     - application/json
+  #       - "application/json"
   #     produces:
-  #     - application/json
+  #       - "application/json"
+
   #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - name: id
-  #       in: path
-  #       description: The user ID.
-  #       required: true
-  #       type: string
-  #       minimum: 1
+  #       - in: header
+  #         name: Authorization
+  #         type: string
+  #         required: true
+  #         description: auth_token
+  #       - in: path
+  #         name: id # Note the name is the same as in the path
+  #         required: true
+  #         type: string
+  #         minimum: 1
+  #         description: The Campaign ID.
+  #       - in: header
+  #         name: dburl
+  #         type: string
+  #         required: true
+  #         description: db_url
+
   #     responses:
   #       "200":
   #         description: Success
   #         schema:
-  #           $ref: '#/definitions/ApiResponse'
+  #           $ref: "#/definitions/ApiResponse"
   #       default:
   #         description: error
   #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
-  # /campaigns:
-  #   get:
-  #     tags:
-  #     - Campaigns
-  #     summary: get Campaign
-  #     description: get all Campaign
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #           $ref: '#/definitions/ApiResponse'
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
-  #   post:
-  #     tags:
-  #     - Campaigns
-  #     summary: create Campaign
-  #     description: create Campaign
-  #     operationId: createCampaignController
-  #     consumes:
-  #     - application/json
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #     - name: Authorization
-  #       in: header
-  #       description: auth_key
-  #       required: true
-  #       type: string
-  #     - in: body
-  #       name: body
-  #       description: payload
-  #       required: true
-  #       schema:
-  #         $ref: '#/definitions/campaign'
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         schema:
-  #           $ref: '#/definitions/ApiResponse'
-  #       default:
-  #         description: error
-  #         schema:
-  #           $ref: '#/definitions/ErrorResponse'
+  #           $ref: "#/definitions/ErrorResponse"
+
+  /campaigns:
+    post:
+      tags:
+        - "Campaign"
+      summary: "Create Campaign"
+      description: "Create Campaign"
+
+      x-swagger-router-controller: "campaignController"
+      operationId: createCampaignController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/campaign"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 securityDefinitions:
   Bearer:
     description: |
