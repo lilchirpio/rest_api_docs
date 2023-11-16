@@ -458,6 +458,46 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+
+  /dashboard:
+     get:
+      tags:
+        - "Dashboard"
+      summary: "Dashboard API"
+      description: "Dashboard API"
+
+      x-swagger-router-controller: "dashboardController"
+      operationId: getDashboardController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+
   /api/v1/campaign-run/details/{projectId}/{campaignrunId}:
     get:
       tags:
