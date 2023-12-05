@@ -458,6 +458,409 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /v1/campaigns/{id}:
+    get:
+      tags:
+        - "Campaign"
+      summary: "Get All campaign"
+      description: "Get All campaign"
+
+      x-swagger-router-controller: "campaignController"
+      operationId: getCampaignController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: project Id;
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: query
+          name: pageIndex
+          type: integer
+          required: true
+          description: offset value
+        - in: query
+          name: pageSize
+          type: integer
+          required: true
+          description: limit value
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    delete:
+      tags:
+        - "Campaign"
+      summary: "delete campaign"
+      description: "delete campaign"
+
+      x-swagger-router-controller: "campaignController"
+      operationId: deleteCampaignController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Campaign ID.
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /v1/campaigns:
+    post:
+      tags:
+        - "Campaign"
+      summary: "Create Campaign"
+      description: "Create Campaign"
+
+      x-swagger-router-controller: "campaignController"
+      operationId: createCampaignController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/campaign"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+  /v1/advance-settings/{id}:
+    get:
+      tags:
+        - "advance Settings"
+      summary: "get advance Settings"
+      description: "get advance Settings"
+
+      operationId: getAdvSettingController
+      x-swagger-router-controller: "advanceSettingController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Project Id.
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      tags:
+        - "advance Settings"
+      summary: "create or update advance Settings"
+      description: "create or update advance Settings"
+
+      x-swagger-router-controller: "advanceSettingController"
+      operationId: createOrUpdateAdvanceSettingController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Project Id.
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/advanceSetting"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /v1/call-settings/{id}:
+    get:
+      tags:
+        - "Call Setting"
+      summary: "get Call Setting by projectId"
+      description: "get Call Setting"
+
+      operationId: getCallSettingController
+      x-swagger-router-controller: "callSettingController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Project Id.
+
+        # - in: query
+        #   name: pageIndex
+        #   type: integer
+        #   required: true
+        #   description: offset value
+        # - in: query
+        #   name: pageSize
+        #   type: integer
+        #   required: true
+        #   description: limit value
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+        - "Call Setting"
+      summary: "delete call Setting by Id"
+      description: "delete call Setting by Id"
+
+      operationId: deleteCallSettingController
+      x-swagger-router-controller: "callSettingController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The document Id.
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+  /v1/agent-setting:
+    post:
+      tags:
+        - "Agent Setting"
+      summary: "create Agent Setting"
+      description: "create or update Agent Setting"
+
+      operationId: createPromptsController
+      x-swagger-router-controller: "promptsController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/agentSetting"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      tags:
+        - "Agent Setting"
+      summary: "get Agent Setting"
+      description: "get Agent Setting"
+
+      operationId: getAgentSettingController
+      x-swagger-router-controller: "promptsController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 
   /dashboard:
      get:
@@ -496,6 +899,101 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /v1/dashboard/chart:
+    get:
+      tags:
+        - "Dashboard"
+      summary: "Dashboard charts API"
+      description: "Dashboard charts API"
+
+      x-swagger-router-controller: "dashboardController"
+      operationId: getDashboardChartsController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /v1/campaign-runs/{projectId}/{campaignId}:
+    get:
+      tags:
+        - "Campaign Runs"
+      summary: "Get All campaign runs"
+      description: "Get All campaign runs"
+
+      x-swagger-router-controller: "campaignRunController"
+      operationId: getCampaignRunController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: path
+          name: projectId # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: account Name;
+        - in: path
+          name: campaignId # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Campaign ID.
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        # - in: query
+        #   name: offset
+        #   type: integer
+        #   required: true
+        #   description: offset value
+        # - in: query
+        #   name: limit
+        #   type: integer
+        #   required: true
+        #   description: limit value
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 
   /api/v1/campaign-run/details/{projectId}/{campaignrunId}:
@@ -1751,6 +2249,17 @@ definitions:
       projectId:
         type: string
 
+  campaign:
+    type: object
+    properties:
+      audienceListId:
+        type: array
+        items:
+          type: string
+      campaignName:
+        type: string
+      projectId:
+        type: string
 
 
   refresh_token:
@@ -1784,21 +2293,33 @@ definitions:
         type: string
       triggerKeywords:
         type: string
-  SampleAPi:
-    type: object
-  campaign:
+
+  agentSetting:
     type: object
     properties:
-      campaignName:
+      projectId:
         type: string
-      audienceListId:
+      seletedType:
+        type: string
+      conversationData:
         type: array
         items:
-          type: string
-      project:
+          type: object
+      agentName:
         type: string
-      botPlatform:
+      organisationName:
         type: string
+      greetingMessage:
+        type: string
+      context:
+        type: string
+      rules:
+        type: string
+
+
+  SampleAPi:
+    type: object
+
   accountbasedGetRunCampaignDetails:
     type: object
     properties:
@@ -1868,6 +2389,19 @@ definitions:
       - audienceName
       - projectId
       - audienceList
+
+
+  advanceSetting:
+    type: object
+    properties:
+      apiKey:
+        type: string
+      ruleId:
+        type: string
+      accountId:
+        type: string
+      clientId:
+        type: string
 
 
   ApiResponse:
