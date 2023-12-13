@@ -782,6 +782,49 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /v1/call-settings:
+    post:
+      tags:
+        - "Call Setting"
+      summary: ""
+      description: "Call Setting"
+      operationId: addCallSettingController
+      x-swagger-router-controller: "callSettingController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/callSetting"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
 
   /v1/agent-setting:
     post:
@@ -2401,6 +2444,28 @@ definitions:
       accountId:
         type: string
       clientId:
+        type: string
+
+  callSetting:
+    type: object
+    properties:
+      projectId:
+        type: string
+      callerIdNumber:
+        type: string
+      callTransferNumber:
+        type: string
+      disconnectedTime:
+        type: string
+      asrEngine:
+        type: string
+      gateway:
+        type: string
+      responseFormat:
+        type: string
+      voice:
+        type: string
+      languageCode:
         type: string
 
 
