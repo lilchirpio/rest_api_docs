@@ -850,7 +850,7 @@ paths:
         "200":
           description: Success
           schema:
-            "type": "object",
+            "type": "object"
             "properties": {
               "status": {
                 "type": "integer"
