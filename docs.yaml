@@ -1245,7 +1245,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CallerIDVerificationCreate'
+              $ref: '#/definitions/CallerIDVerificationCreate'
         required: true
       responses:
         '200':
@@ -1253,13 +1253,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OTPOutput'
+                $ref: '#/definitions/OTPOutput'
         '422':
           description: Validation Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: '#/definitions/HTTPValidationError'
   /twilio/caller_id/check/{phone_number}:
     get:
       tags:
@@ -1292,7 +1292,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: '#/definitions/HTTPValidationError'
   # /refresh-token:
   #   post:
   #     tags:
@@ -2521,69 +2521,38 @@ definitions:
       - msg
       - type
     title: ValidationError
+  CallerIDVerificationCreate:
+    properties:
+      phone_number:
+        type: string
+        title: Phone Number
+      friendly_name:
+        type: string
+        title: Friendly Name
+        default: Vodex Customer Caller ID
+    type: object
+    required:
+      - phone_number
+    title: CallerIDVerificationCreate
+  OTPOutput:
+    properties:
+      otp:
+        type: string
+        title: Otp
+    type: object
+    required:
+      - otp
+    title: OTPOutput
   HTTPValidationError:
     properties:
       detail:
         items:
-          $ref: "#/definitions/ValidationError"
+          $ref: '#/definitions/ValidationError'
         type: array
         title: Detail
     type: object
     title: HTTPValidationError
+
 externalDocs:
   description: Find out more about Vodex
   url: https://vodex.ai
-components:
-  schemas:
-    CallerIDVerificationCreate:
-      properties:
-        phone_number:
-          type: string
-          title: Phone Number
-        friendly_name:
-          type: string
-          title: Friendly Name
-          default: Vodex Customer Caller ID
-      type: object
-      required:
-        - phone_number
-      title: CallerIDVerificationCreate
-    OTPOutput:
-      properties:
-        otp:
-          type: string
-          title: Otp
-      type: object
-      required:
-        - otp
-      title: OTPOutput
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-              - type: string
-              - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-        - loc
-        - msg
-        - type
-      title: ValidationError
