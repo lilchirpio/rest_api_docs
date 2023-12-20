@@ -1235,7 +1235,7 @@ paths:
   /twilio/caller_id/create:
     post:
       tags:
-        - twilio
+        - Caller ID
       summary: Makes an API call to Twilio to verify the Caller ID
       description: >-
         Makes an API call to Twilio to verify the caller id. The phone number
@@ -1263,7 +1263,7 @@ paths:
   /twilio/caller_id/check/{phone_number}:
     get:
       tags:
-        - twilio
+        - Caller ID
       summary: Check Caller Id Exits
       description: |-
         Verifies whether the caller ID exists or not.
