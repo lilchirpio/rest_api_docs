@@ -1557,7 +1557,68 @@ paths:
             application/json:
               schema:
                 $ref: "#/definitions/HTTPValidationError"
-
+  
+  /twilio/caller_id/create:
+    post:
+      tags:
+        - Caller ID
+      summary: Makes an API call to Twilio to verify the Caller ID
+      description: >-
+        Makes an API call to Twilio to verify the caller id. The phone number
+        must start with `+`
+      operationId: create_caller_id_verification_request_twilio_caller_id_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/CallerIDVerificationCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/OTPOutput'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/HTTPValidationError'
+  /twilio/caller_id/check/{phone_number}:
+    get:
+      tags:
+        - Caller ID
+      summary: Check Caller Id Exits
+      description: |-
+        Verifies whether the caller ID exists or not.
+        The phone number must start with a `+`
+      operationId: check_caller_id_exits_twilio_caller_id_check__phone_number__get
+      parameters:
+        - required: true
+          schema:
+            type: string
+            title: Phone Number
+          name: phone_number
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '400':
+          description: Already verified
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/HTTPValidationError'
   # /refresh-token:
   #   post:
   #     tags:
@@ -2799,15 +2860,38 @@ definitions:
       - msg
       - type
     title: ValidationError
+  CallerIDVerificationCreate:
+    properties:
+      phone_number:
+        type: string
+        title: Phone Number
+      friendly_name:
+        type: string
+        title: Friendly Name
+        default: Vodex Customer Caller ID
+    type: object
+    required:
+      - phone_number
+    title: CallerIDVerificationCreate
+  OTPOutput:
+    properties:
+      otp:
+        type: string
+        title: Otp
+    type: object
+    required:
+      - otp
+    title: OTPOutput
   HTTPValidationError:
     properties:
       detail:
         items:
-          $ref: "#/definitions/ValidationError"
+          $ref: '#/definitions/ValidationError'
         type: array
         title: Detail
     type: object
     title: HTTPValidationError
+
 externalDocs:
   description: Find out more about Vodex
   url: https://vodex.ai
