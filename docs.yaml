@@ -534,7 +534,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/campaigns/{id}:
+  /api/v1/campaigns/{id}:
     get:
       tags:
         - "Campaign"
@@ -629,7 +629,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/campaigns:
+  /api/v1/campaigns:
     post:
       tags:
         - "Campaign"
@@ -672,7 +672,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/advance-settings/{id}:
+  /api/v1/advance-settings/{id}:
     get:
       tags:
         - "advance Settings"
@@ -762,7 +762,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/call-settings/{id}:
+  /api/v1/call-settings/{id}:
     get:
       tags:
         - "Call Setting"
@@ -939,7 +939,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/call-settings:
+  /api/v1/call-settings:
     post:
       tags:
         - "Call Setting"
@@ -997,7 +997,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /v1/verify-otp:
+  /api/v1/verify-otp:
     post:
       tags:
         - "Caller ID"
@@ -1057,7 +1057,46 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 
-  /v1/agent-setting:
+  /api/v1/recharge/manual:
+    post:
+      tags:
+        - "Recharge"
+      summary: "recharge account"
+      description: "recharge account"
+
+      x-swagger-router-controller: "rechargeController"
+      operationId: rechargeManualController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/rechargeManual"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+  /api/v1/agent-setting:
     post:
       tags:
         - "Agent Setting"
@@ -1223,7 +1262,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/dashboard/chart:
+  /api/v1/dashboard/chart:
     get:
       tags:
         - "Dashboard"
@@ -1292,7 +1331,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/campaign-runs/{projectId}/{campaignId}:
+  /api/v1/campaign-runs/{projectId}/{campaignId}:
     get:
       tags:
         - "Campaign Runs"
@@ -2552,6 +2591,14 @@ definitions:
     properties:
       id:
         type: string
+
+  rechargeManual:
+    type: object
+    properties:
+      email:
+        type: string
+      balance:
+        type: number
 
   createProject:
     type: object
