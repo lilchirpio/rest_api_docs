@@ -1174,7 +1174,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /dashboard:
+  /api/v1/dashboard:
     get:
       tags:
         - "Dashboard"
