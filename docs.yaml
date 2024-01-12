@@ -211,6 +211,70 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+        - "Projects"
+      summary: "delete projects"
+      description: "This API will delete the exisiting project on request"
+
+      x-swagger-router-controller: "projectController"
+      operationId: deleteProjectsController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: project Id;
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "acknowledged": {
+                    "type": "boolean"
+                  },
+                  "deletedCount": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "acknowledged",
+                  "deletedCount"
+                ]
+              }
+            }
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /api/v1/audience:
     post:
@@ -534,7 +598,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/campaigns/{id}:
+  /v1/campaigns/{id}:
     get:
       tags:
         - "Campaign"
@@ -629,7 +693,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/campaigns:
+  /v1/campaigns:
     post:
       tags:
         - "Campaign"
@@ -672,7 +736,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/advance-settings/{id}:
+  /v1/advance-settings/{id}:
     get:
       tags:
         - "advance Settings"
@@ -762,7 +826,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/call-settings/{id}:
+  /v1/call-settings/{id}:
     get:
       tags:
         - "Call Setting"
@@ -939,7 +1003,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/call-settings:
+  /v1/call-settings:
     post:
       tags:
         - "Call Setting"
@@ -997,12 +1061,12 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /api/v1/verify-otp:
+  /v1/verify-otp:
     post:
       tags:
-        - "Caller ID"
-      summary: "verify otp"
-      description: "verify OTP"
+        - "Voximplant"
+      summary: "Voximplant get otp"
+      description: "Voximplant"
 
       operationId: voximplantVerifyOtpController
       x-swagger-router-controller: "voximplantOtpController"
@@ -1057,46 +1121,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 
-  /api/v1/recharge/manual:
-    post:
-      tags:
-        - "Recharge"
-      summary: "recharge account"
-      description: "recharge account"
-
-      x-swagger-router-controller: "rechargeController"
-      operationId: rechargeManualController
-
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-
-      parameters:
-        - in: header
-          name: Authorization
-          type: string
-          required: true
-          description: auth_token
-        - in: body
-          name: body
-          description: payload
-          required: true
-          schema:
-            $ref: "#/definitions/rechargeManual"
-
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/ApiResponse"
-        default:
-          description: error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-
-  /api/v1/agent-setting:
+  /v1/agent-setting:
     post:
       tags:
         - "Agent Setting"
@@ -1174,7 +1199,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/dashboard:
+  /dashboard:
     get:
       tags:
         - "Dashboard"
@@ -1262,7 +1287,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/dashboard/chart:
+  /v1/dashboard/chart:
     get:
       tags:
         - "Dashboard"
@@ -1331,7 +1356,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/v1/campaign-runs/{projectId}/{campaignId}:
+  /v1/campaign-runs/{projectId}/{campaignId}:
     get:
       tags:
         - "Campaign Runs"
@@ -1596,68 +1621,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/definitions/HTTPValidationError"
-  
-  /twilio/caller_id/create:
-    post:
-      tags:
-        - Caller ID
-      summary: Makes an API call to Twilio to verify the Caller ID
-      description: >-
-        Makes an API call to Twilio to verify the caller id. The phone number
-        must start with `+`
-      operationId: create_caller_id_verification_request_twilio_caller_id_create_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/definitions/CallerIDVerificationCreate'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/definitions/OTPOutput'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/definitions/HTTPValidationError'
-  /twilio/caller_id/check/{phone_number}:
-    get:
-      tags:
-        - Caller ID
-      summary: Check Caller Id Exits
-      description: |-
-        Verifies whether the caller ID exists or not.
-        The phone number must start with a `+`
-      operationId: check_caller_id_exits_twilio_caller_id_check__phone_number__get
-      parameters:
-        - required: true
-          schema:
-            type: string
-            title: Phone Number
-          name: phone_number
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '400':
-          description: Already verified
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/definitions/HTTPValidationError'
+
   # /refresh-token:
   #   post:
   #     tags:
@@ -2592,14 +2556,6 @@ definitions:
       id:
         type: string
 
-  rechargeManual:
-    type: object
-    properties:
-      email:
-        type: string
-      balance:
-        type: number
-
   createProject:
     type: object
     properties:
@@ -2907,38 +2863,15 @@ definitions:
       - msg
       - type
     title: ValidationError
-  CallerIDVerificationCreate:
-    properties:
-      phone_number:
-        type: string
-        title: Phone Number
-      friendly_name:
-        type: string
-        title: Friendly Name
-        default: Vodex Customer Caller ID
-    type: object
-    required:
-      - phone_number
-    title: CallerIDVerificationCreate
-  OTPOutput:
-    properties:
-      otp:
-        type: string
-        title: Otp
-    type: object
-    required:
-      - otp
-    title: OTPOutput
   HTTPValidationError:
     properties:
       detail:
         items:
-          $ref: '#/definitions/ValidationError'
+          $ref: "#/definitions/ValidationError"
         type: array
         title: Detail
     type: object
     title: HTTPValidationError
-
 externalDocs:
   description: Find out more about Vodex
   url: https://vodex.ai
