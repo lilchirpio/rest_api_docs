@@ -1248,12 +1248,12 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/verify-otp:
+  /api/v1/verify-otp:
     post:
       tags:
-        - "Voximplant"
-      summary: "Voximplant verify otp"
-      description: "Voximplant"
+        - "Twilio"
+      summary: "Twilio verify otp"
+      description: "Twilio"
 
       operationId: voximplantVerifyOtpController
       x-swagger-router-controller: "voximplantOtpController"
@@ -1307,12 +1307,12 @@ paths:
           schema: 
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/create-otp:
+  /twilio/caller_id/create:
     post:
       tags:
-        - "Voximplant"
-      summary: "Voximplant create otp"
-      description: "Voximplant"
+        - "Twilio"
+      summary: "Twilio create otp"
+      description: "Twilio"
       operationId: voximplantGetOtpController
       x-swagger-router-controller: "voximplantOtpController"
 
