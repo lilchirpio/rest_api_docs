@@ -456,16 +456,16 @@ paths:
                 "updatedAt",
                 "__v"
               ]
+              }
+              ]
+              }
+              },
+              "required": [
+                "totalCount",
+                "doc"
+              ]
+              }
             }
-          ]
-        }
-      },
-      "required": [
-        "totalCount",
-        "doc"
-      ]
-    }
-  }
   
         default:
           description: error
@@ -565,7 +565,7 @@ paths:
       tags:
         - "Call Trigger"
       summary: "Run Campaign"
-      description: "Run Campaign"
+      description: "Run Campaign. **You can also pass custom parameters which are written in '{}'s in Agent in the same object for every contact by passing the field name and value"
 
       x-swagger-router-controller: "triggerCallController"
       operationId: triggerAutomaticCallController
@@ -1667,8 +1667,8 @@ paths:
                   ]
                 }
               }
-          }
-        }
+              }
+            }
         default:
           description: error
           schema:
@@ -2137,25 +2137,21 @@ paths:
           type: string
           required: true
           description: authorization token obtained on the authentication API in "Bearer <token>" format or API key
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/definitions/Summary"
-        required: true
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/Summary"
       responses:
         "200":
           description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/SummaryOutput"
+          schema:
+            $ref: "#/definitions/SummaryOutput"
         "422":
           description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/HTTPValidationError"
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
 
   /analyze/transcript/{call_uuid}:
     get:
@@ -2166,9 +2162,7 @@ paths:
       operationId: get_transcript_analyze_transcript__call_uuid__get
       parameters:
         - required: true
-          schema:
-            type: string
-            title: Call Uuid
+          type: string
           name: call_uuid
           in: path
         - in: header
@@ -2179,15 +2173,11 @@ paths:
       responses:
         "200":
           description: Successful Response
-          content:
-            application/json:
-              schema: {}
+          schema: {}
         "422":
           description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/definitions/HTTPValidationError"
+          schema:
+            $ref: "#/definitions/HTTPValidationError"
 
   # /refresh-token:
   #   post:
@@ -3513,10 +3503,6 @@ definitions:
   ValidationError:
     properties:
       loc:
-        items:
-          anyOf:
-            - type: string
-            - type: integer
         type: array
         title: Location
       msg:
