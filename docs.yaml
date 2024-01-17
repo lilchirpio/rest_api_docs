@@ -736,6 +736,192 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /api/v1/agent/import:
+    post:
+      tags:
+        - "Agent"
+      summary: "import agent"
+      description: "import agent"
+
+      operationId: agentSettingImportController
+      x-swagger-router-controller: "promptsController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/agentSettingImport"
+          
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "projectId": {
+                        "type": "string"
+                      },
+                      "conversationData": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "input": {
+                                "type": "string"
+                              },
+                              "output": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "input",
+                              "output"
+                            ]
+                          }
+                        ]
+                      },
+                      "agentName": {
+                        "type": "string"
+                      },
+                      "organisationName": {
+                        "type": "string"
+                      },
+                      "greetingMessage": {
+                        "type": "string"
+                      },
+                      "context": {
+                        "type": "string"
+                      },
+                      "rules": {
+                        "type": "string"
+                      },
+                      "objections": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "voicemailMessage": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      },
+                      "__v": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "projectId",
+                      "conversationData",
+                      "agentName",
+                      "organisationName",
+                      "greetingMessage",
+                      "context",
+                      "rules",
+                      "objections",
+                      "voicemailMessage",
+                      "createdAt",
+                      "updatedAt",
+                      "__v"
+                    ]
+                  }
+                ]
+              }
+            }
+
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /v1/default-agent/{id}:
+    post:
+      tags:
+        - "Agent"
+      summary: "Set default agent"
+      description: "Set default agent"
+
+      x-swagger-router-controller: "agentSettingController"
+      operationId: defaultAgentSettingController
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: project Id;
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/defaultAgent"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              }
+            }
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /v1/advance-settings/{id}:
     get:
       tags:
@@ -1061,12 +1247,13 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /v1/verify-otp:
+
+  /api/v1/verify-otp:
     post:
       tags:
-        - "Voximplant"
-      summary: "Voximplant get otp"
-      description: "Voximplant"
+        - "Twilio"
+      summary: "Twilio verify otp"
+      description: "Twilio"
 
       operationId: voximplantVerifyOtpController
       x-swagger-router-controller: "voximplantOtpController"
@@ -1120,6 +1307,52 @@ paths:
           schema: 
             $ref: "#/definitions/ErrorResponse"
 
+  /twilio/caller_id/create:
+    post:
+      tags:
+        - "Twilio"
+      summary: "Twilio create otp"
+      description: "Twilio"
+      operationId: voximplantGetOtpController
+      x-swagger-router-controller: "voximplantOtpController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/voximplantGetOtp"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "otp": {
+                "type": "string"
+              }
+            }
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /v1/agent-setting:
     post:
@@ -1188,6 +1421,160 @@ paths:
           type: string
           required: true
           description: auth_key
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    put:
+      tags:
+        - "Agent Setting"
+      summary: "edit Agent Setting"
+      description: "edit Agent Setting"
+
+      operationId: updatePromptsController
+      x-swagger-router-controller: "promptsController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_key
+        - in: path
+          name: id
+          required: true
+          type: string
+          minimum: 1
+          description: The project ID.
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/agentSetting"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "acknowledged": {
+                    "type": "boolean"
+                  },
+                  "modifiedCount": {
+                    "type": "integer"
+                  },
+                  "upsertedId": {
+                    "type": "null"
+                  },
+                  "upsertedCount": {
+                    "type": "integer"
+                  },
+                  "matchedCount": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /v1/recording:
+    post:
+      tags:
+        - "Recording"
+      summary: "Add Recording"
+      description: "Add Recording"
+
+      operationId: createRecordingController
+      x-swagger-router-controller: "recordingController"
+
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: formData
+          name: file
+          type: file
+          required: false
+          description: The file to upload.
+        - in: formData
+          name: projectId
+          type: string
+          required: false
+          description: projectId
+        - in: formData
+          name: recordingName
+          type: string
+          required: false
+          description: recordingName
+        - in: formData
+          name: tag
+          type: string
+          required: false
+          description: tag
+        - in: formData
+          name: recordingUrl
+          type: string
+          required: false
+          description: recordingUrl
+        - in: formData
+          name: isFromTemplate
+          type: boolean
+          required: false
+          description: isFromTemplate
+        - in: formData
+          name: helperText
+          type: string
+          required: false
+          description: helperText
+        # - in: body
+        #   name: body
+        #   description: payload
+        #   required: true
+        #   schema:
+        #     $ref: "#/definitions/recordings"
 
       responses:
         "200":
@@ -1553,6 +1940,186 @@ paths:
                   },
               }
 
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /v1/appointment-settings:
+    post:
+      tags:
+        - "Appointment Settings"
+      summary: ""
+      description: "Appointment Settings"
+      operationId: addAppointmentSettingController
+      x-swagger-router-controller: "appointmentController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: body
+          name: body
+          description: payload
+          required: true
+          schema:
+            $ref: "#/definitions/appointmentSetting"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "acknowledged": {
+                    "type": "boolean"
+                  },
+                  "modifiedCount": {
+                    "type": "integer"
+                  },
+                  "upsertedId": {
+                    "type": "null"
+                  },
+                  "upsertedCount": {
+                    "type": "integer"
+                  },
+                  "matchedCount": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /v1/appointment-settings/{id}:
+    get:
+      tags:
+        - "Appointment Settings"
+      summary: "get appointment Setting by projectId"
+      description: "get appointment Setting"
+
+      operationId: getAppointmentSettingController
+      x-swagger-router-controller: "appointmentController"
+
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: auth_token
+        - in: header
+          name: dburl
+          type: string
+          required: true
+          description: db_url
+        - in: path
+          name: id # Note the name is the same as in the path
+          required: true
+          type: string
+          minimum: 1
+          description: The Project Id.
+
+        # - in: query
+        #   name: pageIndex
+        #   type: integer
+        #   required: true
+        #   description: offset value
+        # - in: query
+        #   name: pageSize
+        #   type: integer
+        #   required: true
+        #   description: limit value
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "projectId": {
+                        "type": "string"
+                      },
+                      "slots_availability": {
+                        "type": "string"
+                      },
+                      "slots_index": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "integer"
+                          }
+                        ]
+                      },
+                      "slots_error": {
+                        "type": "string"
+                      },
+                      "no_slots_available": {
+                        "type": "string"
+                      },
+                      "error_booking_appointment": {
+                        "type": "string"
+                      },
+                      "appointment_booked": {
+                        "type": "string"
+                      },
+                      "slots_separator": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      },
+                      "__v": {
+                        "type": "integer"
+                      }
+                    },
+                  }
+                ]
+              }
+            }
         default:
           description: error
           schema:
@@ -2639,6 +3206,7 @@ definitions:
         type: string
       mobileNumber:
         type: string
+
   recordings:
     type: object
     properties:
@@ -2654,6 +3222,22 @@ definitions:
         type: string
       triggerKeywords:
         type: string
+
+  # recordings:
+  #   type: object
+  #   properties:
+  #     projectId:
+  #       type: string
+  #     recordingName:
+  #       type: string
+  #     tag:
+  #       type: string
+  #     recordingUrl:
+  #       type: string
+  #     helperText:
+  #       type: string
+  #     isFromTemplate:
+  #       type: boolean
 
   agentSetting:
     type: object
@@ -2675,6 +3259,14 @@ definitions:
       context:
         type: string
       rules:
+        type: string
+
+  agentSettingImport:
+    type: object
+    properties:
+      projectId:
+        type: string
+      agentId:
         type: string
 
   SampleAPi:
@@ -2738,6 +3330,58 @@ definitions:
       type:
         type: string
 
+  voximplantGetOtp:
+    type: object
+    properties:
+      friendly_name:
+        type: string
+      phone_number:
+        type: string
+
+  appointmentSetting:
+    type: object
+    properties:
+      project_Id:
+        type: string
+      appointmentBooked:
+        type: string
+      appointment_booked:
+        type: string
+      createdAt:
+        type: string
+      errorBookingAppointment:
+        type: string
+      error_booking_appointment:
+        type: string
+      noSlotsAvailable:
+        type: string
+      no_slots_available:
+        type: string
+      slotsAvailability:
+        type: string
+      slotsIndex:
+        type: array
+      slotsSeparator:
+        type: string
+      slots_availability:
+        type: string
+      slots_error:
+        type: string
+      slots_index:
+        type: string
+      slots_separator:
+        type: string
+      updatedAt:
+        type: string
+      
+      
+
+  defaultAgent:
+    type: object
+    properties:
+      agentId:
+        type: string
+
   AudienceList:
     type: object
     properties:
@@ -2790,11 +3434,35 @@ definitions:
         type: string
       gateway:
         type: string
+      checkDnc:
+        type: boolean
+      checkDnd:
+        type: boolean
+      checkUser:
+        type: boolean
+      voiceMailDetection:
+        type: boolean
       responseFormat:
         type: string
       voice:
         type: string
       languageCode:
+        type: string
+      Interrupt:
+        type: string
+      model:
+        type: string
+      pauseBetweenSentence:
+        type: string
+      ringingDisconnect:
+        type: string
+      silentThreshold:
+        type: string
+      temperature:
+        type: string
+      transferGateway:
+        type: string
+      transferWebhook:
         type: string
 
   ApiResponse:
