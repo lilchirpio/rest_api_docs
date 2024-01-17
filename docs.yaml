@@ -2128,7 +2128,7 @@ paths:
   /analyze/summary:
     post:
       tags:
-        - analyze
+        - Analyze
       summary: Summarize
       operationId: summarize_analyze_summary_post
       parameters:
@@ -2156,7 +2156,7 @@ paths:
   /analyze/transcript/{call_uuid}:
     get:
       tags:
-        - analyze
+        - Analyze
       summary: Gets ths transcript of a call UUID
       description: Gets the transcript of a call
       operationId: get_transcript_analyze_transcript__call_uuid__get
