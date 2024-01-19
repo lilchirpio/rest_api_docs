@@ -528,7 +528,7 @@ paths:
       consumes:
         - "application/json"
       produces:
-        - "application/json"
+        - "application/json"  
 
       parameters:
         - in: header
@@ -3140,12 +3140,12 @@ definitions:
         items:
           type: string
         description: "your user Id which will be used to access the account."
-      voximPlantApikey:
-        type: string
-      voximPlantRuleId:
-        type: string
-      voximPlantAccountId:
-        type: string
+      # voximPlantApikey:
+      #   type: string
+      # voximPlantRuleId:
+      #   type: string
+      # voximPlantAccountId:
+      #   type: string
       description:
         type: string
         description: "your project description"
