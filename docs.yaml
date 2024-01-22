@@ -3333,38 +3333,21 @@ definitions:
     properties:
       project_Id:
         type: string
-      appointmentBooked:
-        type: string
-      appointment_booked:
-        type: string
-      createdAt:
-        type: string
-      errorBookingAppointment:
-        type: string
-      error_booking_appointment:
-        type: string
-      noSlotsAvailable:
-        type: string
-      no_slots_available:
-        type: string
       slotsAvailability:
         type: string
       slotsIndex:
         type: array
+      slotsError:
+        type: string
+      noSlotsAvailable:
+        type: string
+      errorBookingAppointment:
+        type: string
+      appointmentBooked:
+        type: string
       slotsSeparator:
         type: string
-      slots_availability:
-        type: string
-      slots_error:
-        type: string
-      slots_index:
-        type: string
-      slots_separator:
-        type: string
-      updatedAt:
-        type: string
-      
-      
+    
 
   defaultAgent:
     type: object
