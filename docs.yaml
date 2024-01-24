@@ -171,7 +171,26 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "projectId"
+                ]
+              }
+            }
         default:
           description: error
           schema:
@@ -206,7 +225,75 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "projectName": {
+                        "type": "string"
+                      },
+                      "projectKey": {
+                        "type": "null"
+                      },
+                      "botPlatform": {
+                        "type": "string"
+                      },
+                      "accountId": {
+                        "type": "null"
+                      },
+                      "whatsappId": {
+                        "type": "null"
+                      },
+                      "whatsappActive": {
+                        "type": "boolean"
+                      },
+                      "isDeleted": {
+                        "type": "boolean"
+                      },
+                      "sendSms": {
+                        "type": "boolean"
+                      },
+                      "sendWhatsapp": {
+                        "type": "boolean"
+                      },
+                      "projectAccess": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "serviceProvider": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      },
+                      "__v": {
+                        "type": "integer"
+                      }
+                    },
+                  }
+                ]
+              }
+            }
         default:
           description: error
           schema:
@@ -311,7 +398,66 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string"
+                  },
+                  "audienceName": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "string"
+                  },
+                  "audienceList": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "firstName": {
+                            "type": "string"
+                          },
+                          "lastName": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "firstName",
+                          "lastName",
+                          "phone"
+                        ]
+                      }
+                    ]
+                  },
+                  "audienceHeader": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "_id": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "__v": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
         default:
           description: error
           schema:
@@ -512,7 +658,35 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "acknowledged": {
+                    "type": "boolean"
+                  },
+                  "modifiedCount": {
+                    "type": "integer"
+                  },
+                  "upsertedId": {
+                    "type": "null"
+                  },
+                  "upsertedCount": {
+                    "type": "integer"
+                  },
+                  "matchedCount": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
         default:
           description: error
           schema:
@@ -552,7 +726,26 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "acknowledged": {
+                    "type": "boolean"
+                  },
+                  "deletedCount": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
         default:
           description: error
           schema:
@@ -645,7 +838,109 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "totalCount": {
+                    "type": "integer"
+                  },
+                  "doc": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "AudiencesName": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "audienceName": {
+                                    "type": "string"
+                                  },
+                                  "audienceList": {
+                                    "type": "array",
+                                    "items": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "firstName": {
+                                            "type": "string"
+                                          },
+                                          "lastName": {
+                                            "type": "string"
+                                          },
+                                          "phone": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "firstName",
+                                          "lastName",
+                                          "phone"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "_id",
+                                  "audienceName",
+                                  "audienceList"
+                                ]
+                              }
+                            ]
+                          },
+                          "audienceListId": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "campaignName": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          },
+                          "projectId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "_id",
+                          "AudiencesName",
+                          "audienceListId",
+                          "campaignName",
+                          "updatedAt",
+                          "projectId"
+                        ]
+                      }
+                    ]
+                  },
+                  "campaignRun": {
+                    "type": "integer"
+                  },
+                  "campaignRunDetails": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
         default:
           description: error
           schema:
@@ -687,7 +982,35 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "acknowledged": {
+                    "type": "boolean"
+                  },
+                  "modifiedCount": {
+                    "type": "integer"
+                  },
+                  "upsertedId": {
+                    "type": "null"
+                  },
+                  "upsertedCount": {
+                    "type": "integer"
+                  },
+                  "matchedCount": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
         default:
           description: error
           schema:
@@ -730,7 +1053,46 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string"
+                  },
+                  "audienceListId": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "campaignName": {
+                    "type": "string"
+                  },
+                  "isDelete": {
+                    "type": "boolean"
+                  },
+                  "_id": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "__v": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
         default:
           description: error
           schema:
@@ -739,7 +1101,7 @@ paths:
   /api/v1/agent/import:
     post:
       tags:
-        - "Agent"
+        - "Agent Setting"
       summary: "import agent"
       description: "import agent"
 
@@ -868,7 +1230,7 @@ paths:
   /v1/default-agent/{id}:
     post:
       tags:
-        - "Agent"
+        - "Agent Setting"
       summary: "Set default agent"
       description: "Set default agent"
 
@@ -1391,7 +1753,80 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "msg": {
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string"
+                  },
+                  "conversationData": {
+                    "type": "array",
+                    "items": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "input": {
+                            "type": "string"
+                          },
+                          "output": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "input",
+                          "output"
+                        ]
+                      }
+                    ]
+                  },
+                  "agentName": {
+                    "type": "string"
+                  },
+                  "organisationName": {
+                    "type": "string"
+                  },
+                  "greetingMessage": {
+                    "type": "string"
+                  },
+                  "context": {
+                    "type": "string"
+                  },
+                  "rules": {
+                    "type": "string"
+                  },
+                  "default": {
+                    "type": "boolean"
+                  },
+                  "objections": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "voicemailMessage": {
+                    "type": "string"
+                  },
+                  "_id": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "__v": {
+                    "type": "integer"
+                  }
+                },
+              }
+            }
         default:
           description: error
           schema:
@@ -1426,7 +1861,82 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "projectId": {
+                        "type": "string"
+                      },
+                      "conversationData": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "input": {
+                                "type": "string"
+                              },
+                              "output": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "input",
+                              "output"
+                            ]
+                          }
+                        ]
+                      },
+                      "agentName": {
+                        "type": "string"
+                      },
+                      "organisationName": {
+                        "type": "string"
+                      },
+                      "greetingMessage": {
+                        "type": "string"
+                      },
+                      "context": {
+                        "type": "string"
+                      },
+                      "rules": {
+                        "type": "string"
+                      },
+                      "default": {
+                        "type": "boolean"
+                      },
+                      "objections": {
+                        "type": "array",
+                        "items": {}
+                      },
+                      "voicemailMessage": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      },
+                      "__v": {
+                        "type": "integer"
+                      }
+                    },
+                  }
+                ]
+              }
+            }
         default:
           description: error
           schema:
@@ -1781,22 +2291,102 @@ paths:
           type: string
           required: true
           description: db_url
-        # - in: query
-        #   name: offset
-        #   type: integer
-        #   required: true
-        #   description: offset value
-        # - in: query
-        #   name: limit
-        #   type: integer
-        #   required: true
-        #   description: limit value
+        - in: query
+          name: offset
+          type: integer
+          required: true
+          description: offset value
+        - in: query
+          name: limit
+          type: integer
+          required: true
+          description: limit value
 
       responses:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/ApiResponse"
+            "type": "object"
+            "properties": {
+              "status": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "campaignId": {
+                        "type": "string"
+                      },
+                      "suspended": {
+                        "type": "boolean"
+                      },
+                      "projectId": {
+                        "type": "string"
+                      },
+                      "timeStamp": {
+                        "type": "string"
+                      },
+                      "completed": {
+                        "type": "boolean"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      },
+                      "__v": {
+                        "type": "integer"
+                      },
+                      "audienceCount": {
+                        "type": "integer"
+                      },
+                      "listId": {
+                        "type": "string"
+                      },
+                      "serviceProvider": {
+                        "type": "string"
+                      },
+                      "callEnded": {
+                        "type": "integer"
+                      },
+                      "callFailed": {
+                        "type": "integer"
+                      },
+                      "cost": {
+                        "type": "number"
+                      },
+                      "campaignRunCost": {
+                        "type": "array",
+                        "items": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "null"
+                              },
+                              "campaignRunCost": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "_id",
+                              "campaignRunCost"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                  }
+                ]
+              }
+            }
         default:
           description: error
           schema:
