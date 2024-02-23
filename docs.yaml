@@ -791,7 +791,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/campaigns/{id}:
+  /api/v1/campaigns/{id}:
     get:
       tags:
         - "Campaign"
@@ -1016,7 +1016,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/campaigns:
+  /api/v1/campaigns:
     post:
       tags:
         - "Campaign"
@@ -1227,7 +1227,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/default-agent/{id}:
+  /api/v1/default-agent/{id}:
     post:
       tags:
         - "Agent Setting"
@@ -1284,7 +1284,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/advance-settings/{id}:
+  /api/v1/advance-settings/{id}:
     get:
       tags:
         - "advance Settings"
@@ -1374,7 +1374,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/call-settings/{id}:
+  /api/v1/call-settings/{id}:
     get:
       tags:
         - "Call Setting"
@@ -1551,7 +1551,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/call-settings:
+  /api/v1/call-settings:
     post:
       tags:
         - "Call Setting"
@@ -1716,7 +1716,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/agent-setting:
+  /api/v1/agent-setting:
     post:
       tags:
         - "Agent Setting"
@@ -2018,7 +2018,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/recording:
+  /api/v1/recording:
     post:
       tags:
         - "Recording"
@@ -2096,7 +2096,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /dashboard:
+  /api/v1/dashboard:
     get:
       tags:
         - "Dashboard"
@@ -2184,7 +2184,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/dashboard/chart:
+  /api/v1/dashboard/chart:
     get:
       tags:
         - "Dashboard"
@@ -2253,7 +2253,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/campaign-runs/{projectId}/{campaignId}:
+  /api/v1/campaign-runs/{projectId}/{campaignId}:
     get:
       tags:
         - "Campaign Runs"
@@ -2535,7 +2535,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/appointment-settings:
+  /api/v1/appointment-settings:
     post:
       tags:
         - "Appointment Settings"
@@ -2602,7 +2602,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /v1/appointment-settings/{id}:
+  /api/v1/appointment-settings/{id}:
     get:
       tags:
         - "Appointment Settings"
